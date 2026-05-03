@@ -1,0 +1,111 @@
+.toolbar {
+  height: 42px;
+  background: #15171b;
+  border-bottom: 1px solid #3a3d44;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.app-menu {
+  width: 34px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #3e444d;
+  border-radius: 4px;
+  background: #111318;
+  color: #4ff3d2;
+}
+
+.app-mark {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.project-name {
+  height: 32px;
+  width: 174px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid #3e444d;
+  border-radius: 4px;
+  background: #111318;
+  color: #e7edf7;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.toolbar-group {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: #3a3d44;
+  margin: 0 5px;
+}
+
+.toolbar-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: #aeb5c2;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toolbar-button:hover,
+.toolbar-button.active {
+  background: #242932;
+  color: #fff;
+}
+
+.toolbar-button:active {
+  background: #303642;
+}
+
+.toolbar-button:disabled {
+  cursor: default;
+  color: #555b65;
+}
+
+.toolbar-spacer {
+  flex: 1;
+  min-width: 12px;
+}
+
+.export-button {
+  height: 30px;
+  padding: 0 13px;
+  background: #168df2;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.export-button:hover {
+  background: #2c9bff;
+}

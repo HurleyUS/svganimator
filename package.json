@@ -1,0 +1,41 @@
+{
+  "name": "svganimator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/utils": "^4.0.0",
+    "@types/flubber": "^0.4.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
+    "electron": "^41.2.1",
+    "electron-vite": "^5.0.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "typescript": "^6.0.3",
+    "vite": "^6.4.2"
+  },
+  "dependencies": {
+    "flubber": "^0.4.2",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^1.8.0",
+    "nanoid": "^5.1.9",
+    "paper": "^0.12.18",
+    "react-dropzone": "^15.0.0",
+    "simplify-js": "^1.2.4",
+    "zundo": "^2.3.0",
+    "zustand": "^5.0.12"
+  }
+}

@@ -1,0 +1,77 @@
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #17181b;
+}
+
+.sidebar-header {
+  padding: 9px 12px;
+  background: linear-gradient(#242833, #1d2028);
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #c5ccd8;
+  border-bottom: 1px solid #3a3d44;
+  letter-spacing: 0;
+}
+
+.layers-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.layer-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #c6cbd4;
+  gap: 6px;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+.layer-item:hover {
+  background: #222733;
+}
+
+.layer-item.selected {
+  background: #176ee9;
+  color: #fff;
+}
+
+.layer-expander {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  color: #8992a1;
+}
+
+.layer-icon {
+  color: #d8d064;
+}
+
+.layer-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.layer-actions {
+  display: flex;
+  gap: 8px;
+  color: #8d96a5;
+  opacity: 0;
+}
+
+.layer-item:hover .layer-actions {
+  opacity: 1;
+}
+
+.layer-actions div:hover {
+  color: #ccc;
+}
