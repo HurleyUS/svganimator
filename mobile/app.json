@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "Canaveral",
+    "slug": "canaveral",
+    "scheme": "canaveral",
+    "plugins": ["expo-router"]
+  }
+}

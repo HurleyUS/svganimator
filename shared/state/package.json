@@ -1,0 +1,21 @@
+{
+  "name": "@canaveral/state",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsgo --noEmit",
+    "typecheck": "tsgo --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@canaveral/svg": "workspace:*",
+    "zustand": "^5.0.9"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20260429.1"
+  }
+}

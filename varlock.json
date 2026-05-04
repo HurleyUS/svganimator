@@ -1,0 +1,57 @@
+{
+  "$schema": "https://varlock.dev/schema.json",
+  "env": {
+    "APP_NAME": {
+      "required": true,
+      "description": "Human-readable product name."
+    },
+    "PUBLIC_APP_URL": {
+      "required": true,
+      "description": "Canonical app URL for redirects and webhooks."
+    },
+    "VITE_CLERK_PUBLISHABLE_KEY": {
+      "required": true
+    },
+    "CLERK_SECRET_KEY": {
+      "required": true,
+      "secret": true
+    },
+    "CLERK_FRONTEND_API_URL": {
+      "required": true
+    },
+    "CONVEX_DEPLOYMENT": {
+      "required": true
+    },
+    "VITE_CONVEX_URL": {
+      "required": true
+    },
+    "RESEND_API_KEY": {
+      "required": true,
+      "secret": true
+    },
+    "RESEND_FROM_EMAIL": {
+      "required": true
+    },
+    "STRIPE_SECRET_KEY": {
+      "required": true,
+      "secret": true
+    },
+    "STRIPE_WEBHOOK_SECRET": {
+      "required": true,
+      "secret": true
+    },
+    "VITE_POSTHOG_KEY": {
+      "required": false
+    },
+    "VITE_POSTHOG_HOST": {
+      "required": false
+    },
+    "SENTRY_DSN": {
+      "required": false,
+      "secret": true
+    },
+    "VITE_SENTRY_DSN": {
+      "required": false
+    }
+  }
+}

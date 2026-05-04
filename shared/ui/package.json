@@ -1,0 +1,22 @@
+{
+  "name": "@canaveral/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "scripts": {
+    "build": "tsgo --noEmit",
+    "typecheck": "tsgo --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@canaveral/utils": "workspace:*",
+    "react": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@typescript/native-preview": "^7.0.0-dev.20260429.1"
+  }
+}

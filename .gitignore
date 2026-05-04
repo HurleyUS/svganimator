@@ -1,4 +1,14 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules
+bun.lockb
+coverage
+dist
+build
+.turbo
+.vinxi
+.output
+*.tsbuildinfo
 .fallow/
-out/
-dist/
-node_modules/

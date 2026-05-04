@@ -1,0 +1,20 @@
+{
+  "name": "@canaveral/env",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsgo --noEmit",
+    "typecheck": "tsgo --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20260429.1"
+  }
+}

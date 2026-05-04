@@ -6,28 +6,134 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!out", "!inspiration-docs", "!node_modules", "!package-lock.json", "!bun.lock"]
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!node_modules",
+      "!dist",
+      "!build",
+      "!coverage",
+      "!bun.lock",
+      "!web/.vinxi",
+      "!web/.output",
+      "!web/src/routeTree.gen.ts"
+    ]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 110
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "single",
-      "semicolons": "asNeeded",
-      "trailingCommas": "none"
-    }
+    "lineWidth": 100
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "a11y": {
-        "recommended": false
+        "noSvgWithoutTitle": "error",
+        "useButtonType": "error",
+        "useKeyWithClickEvents": "error",
+        "useValidAnchor": "error"
+      },
+      "complexity": {
+        "noBannedTypes": "error",
+        "noExcessiveCognitiveComplexity": "warn",
+        "noUselessFragments": "error",
+        "useArrowFunction": "error",
+        "useLiteralKeys": "error",
+        "useOptionalChain": "error",
+        "useSimplifiedLogicExpression": "error"
+      },
+      "correctness": {
+        "noInvalidPositionAtImportRule": "error",
+        "noUndeclaredVariables": "error",
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error"
+      },
+      "performance": {
+        "noAccumulatingSpread": "error",
+        "noBarrelFile": "warn",
+        "noDelete": "error",
+        "noReExportAll": "error"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "error"
+      },
+      "style": {
+        "noDefaultExport": "error",
+        "noInferrableTypes": "error",
+        "noNamespace": "error",
+        "noNonNullAssertion": "error",
+        "useConst": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useImportType": "error",
+        "useNodejsImportProtocol": "error",
+        "useTemplate": "error"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "error",
+        "noConsole": "warn",
+        "noDoubleEquals": "error",
+        "noExplicitAny": "error",
+        "noShadowRestrictedNames": "error",
+        "noThenProperty": "error"
       }
     }
-  }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/vite.config.ts", "mobile/app/**/*.tsx", "web/convex/**/*.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.d.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNamespace": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.css"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          },
+          "suspicious": {
+            "noDuplicateCustomProperties": "off"
+          }
+        }
+      }
+    }
+  ]
 }

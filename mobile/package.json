@@ -1,0 +1,25 @@
+{
+  "name": "@canaveral/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "expo-router/entry",
+  "scripts": {
+    "dev": "expo start",
+    "build": "tsgo --noEmit",
+    "typecheck": "tsgo --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@canaveral/config": "workspace:*",
+    "@canaveral/svg": "workspace:*",
+    "expo": "^55.0.19",
+    "expo-router": "^55.0.13",
+    "react": "^19.2.5",
+    "react-native": "^0.85.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@typescript/native-preview": "^7.0.0-dev.20260429.1"
+  }
+}
