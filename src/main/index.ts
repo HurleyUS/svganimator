@@ -1,8 +1,9 @@
-import { app, shell, BrowserWindow } from 'electron'
-import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { join } from 'node:path'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import { app, BrowserWindow, shell } from 'electron'
 
-function createWindow(): void {
+/** Creates and loads the main application window. */
+export function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -35,38 +36,39 @@ function createWindow(): void {
       })
     })
 
-    mainWindow.webContents.on('console-message', (_event, details) => {
-      console.log(`[renderer:${details.level}] ${details.message} (${details.sourceId}:${details.lineNumber})`)
-    })
-
     mainWindow.webContents.on('did-fail-load', (_event, errorCode, errorDescription, validatedURL) => {
       console.error(`[renderer:load-failed] ${errorCode} ${errorDescription} ${validatedURL}`)
     })
   }
 
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  if (is.dev && process.env.ELECTRON_RENDERER_URL) {
+    mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
 
-app.whenReady().then(() => {
-  electronApp.setAppUserModelId('com.electron.svganimator')
+/** Registers Electron lifecycle handlers and starts the first app window. */
+export function bootstrapElectronApp(): void {
+  app.whenReady().then(() => {
+    electronApp.setAppUserModelId('com.electron.svganimator')
 
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
+    app.on('browser-window-created', (_, window) => {
+      optimizer.watchWindowShortcuts(window)
+    })
+
+    createWindow()
+
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
   })
 
-  createWindow()
-
-  app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
   })
-})
+}
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
+bootstrapElectronApp()

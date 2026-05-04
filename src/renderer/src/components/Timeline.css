@@ -100,9 +100,7 @@
 .track-area {
   flex: 1;
   position: relative;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 39px, #2d323a 39px 40px),
-    #17191d;
+  background: repeating-linear-gradient(90deg, transparent 0 39px, #2d323a 39px 40px), #17191d;
   cursor: crosshair;
 }
 

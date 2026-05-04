@@ -1,12 +1,49 @@
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  AlignVerticalJustifyCenter,
+  AlignVerticalJustifyEnd,
+  AlignVerticalJustifyStart,
+  Box,
+  Combine,
+  Download,
+  FolderOpen,
+  Grid3X3,
+  Group,
+  Hand,
+  MousePointer2,
+  PenTool,
+  Power,
+  Redo,
+  Save,
+  Scissors,
+  Type,
+  Undo,
+  Ungroup,
+  Upload,
+  ZoomIn
+} from 'lucide-react'
 import React from 'react'
-import { useStore } from '../store/useStore'
 import { useStore as useZustandStore } from 'zustand'
-import { parseSVG } from '../utils/svgParser'
-import { Upload, Download, Group, Ungroup, AlignLeft, AlignCenter, AlignRight, AlignVerticalJustifyStart, AlignVerticalJustifyCenter, AlignVerticalJustifyEnd, Scissors, Combine, Undo, Redo, Box, Save, FolderOpen, MousePointer2, PenTool, Type, Hand, ZoomIn, Grid3X3, Power } from 'lucide-react'
+import { useStore } from '../store/useStore'
 import { exportToSVG } from '../utils/exporter'
+import { parseSVG } from '../utils/svgParser'
 
+/** Hosts project, import/export, alignment, grouping, and drawing tool commands. */
 export const Toolbar = () => {
-  const { elements, keyframes, duration, setElements, setSelectedElements, groupSelected, ungroupSelected, alignElements, distributeElements, applyBooleanOp } = useStore()
+  const {
+    elements,
+    keyframes,
+    duration,
+    setElements,
+    setSelectedElements,
+    groupSelected,
+    ungroupSelected,
+    alignElements,
+    distributeElements,
+    applyBooleanOp
+  } = useStore()
   const { undo, redo, pastStates, futureStates } = useZustandStore(useStore.temporal, (state) => state)
 
   React.useEffect(() => {
@@ -36,7 +73,9 @@ export const Toolbar = () => {
   const importSVGString = (svgString: string) => {
     const elements = parseSVG(svgString)
     setElements(elements)
-    const firstVisibleElement = elements.find((element) => element.type !== 'defs' && element.type !== 'clipPath' && element.type !== 'mask')
+    const firstVisibleElement = elements.find(
+      (element) => element.type !== 'defs' && element.type !== 'clipPath' && element.type !== 'mask'
+    )
     setSelectedElements(firstVisibleElement ? [firstVisibleElement.id] : [])
   }
 
@@ -73,7 +112,7 @@ export const Toolbar = () => {
     const file = e.target.files?.[0]
     if (!file) return
 
-      const reader = new FileReader()
+    const reader = new FileReader()
     reader.onload = (event) => {
       const svgString = event.target?.result as string
       importSVGString(svgString)
@@ -89,7 +128,9 @@ export const Toolbar = () => {
       </div>
       <div className="project-name">Untitled</div>
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Save Project" onClick={handleSaveProject}><Save size={18} /></button>
+        <button className="toolbar-button" title="Save Project" onClick={handleSaveProject}>
+          <Save size={18} />
+        </button>
         <label className="toolbar-button" title="Open SVG or Project">
           <FolderOpen size={18} />
           <input type="file" accept=".svg,.svganim" onChange={handleOpenFile} style={{ display: 'none' }} />
@@ -99,18 +140,32 @@ export const Toolbar = () => {
       <div className="toolbar-divider" />
 
       <div className="toolbar-group tools-primary">
-        <button className="toolbar-button active" title="Select"><MousePointer2 size={18} /></button>
-        <button className="toolbar-button" title="Pen"><PenTool size={18} /></button>
-        <button className="toolbar-button" title="Shape"><Box size={18} /></button>
-        <button className="toolbar-button" title="Text"><Type size={18} /></button>
-        <button className="toolbar-button" title="Pan"><Hand size={18} /></button>
+        <button className="toolbar-button active" title="Select">
+          <MousePointer2 size={18} />
+        </button>
+        <button className="toolbar-button" title="Pen">
+          <PenTool size={18} />
+        </button>
+        <button className="toolbar-button" title="Shape">
+          <Box size={18} />
+        </button>
+        <button className="toolbar-button" title="Text">
+          <Type size={18} />
+        </button>
+        <button className="toolbar-button" title="Pan">
+          <Hand size={18} />
+        </button>
       </div>
 
       <div className="toolbar-divider" />
 
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Undo" onClick={undo} disabled={pastStates.length === 0}><Undo size={18} /></button>
-        <button className="toolbar-button" title="Redo" onClick={redo} disabled={futureStates.length === 0}><Redo size={18} /></button>
+        <button className="toolbar-button" title="Undo" onClick={undo} disabled={pastStates.length === 0}>
+          <Undo size={18} />
+        </button>
+        <button className="toolbar-button" title="Redo" onClick={redo} disabled={futureStates.length === 0}>
+          <Redo size={18} />
+        </button>
       </div>
 
       <div className="toolbar-divider" />
@@ -124,52 +179,96 @@ export const Toolbar = () => {
           <Download size={18} />
         </button>
       </div>
-      
+
       <div className="toolbar-divider" />
 
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Group" onClick={groupSelected}><Group size={18} /></button>
-        <button className="toolbar-button" title="Ungroup" onClick={ungroupSelected}><Ungroup size={18} /></button>
+        <button className="toolbar-button" title="Group" onClick={groupSelected}>
+          <Group size={18} />
+        </button>
+        <button className="toolbar-button" title="Ungroup" onClick={ungroupSelected}>
+          <Ungroup size={18} />
+        </button>
       </div>
 
       <div className="toolbar-divider" />
 
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Align Left" onClick={() => alignElements('left')}><AlignLeft size={18} /></button>
-        <button className="toolbar-button" title="Align Center" onClick={() => alignElements('center')}><AlignCenter size={18} /></button>
-        <button className="toolbar-button" title="Align Right" onClick={() => alignElements('right')}><AlignRight size={18} /></button>
+        <button className="toolbar-button" title="Align Left" onClick={() => alignElements('left')}>
+          <AlignLeft size={18} />
+        </button>
+        <button className="toolbar-button" title="Align Center" onClick={() => alignElements('center')}>
+          <AlignCenter size={18} />
+        </button>
+        <button className="toolbar-button" title="Align Right" onClick={() => alignElements('right')}>
+          <AlignRight size={18} />
+        </button>
       </div>
 
       <div className="toolbar-divider" />
 
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Align Top" onClick={() => alignElements('top')}><AlignVerticalJustifyStart size={18} /></button>
-        <button className="toolbar-button" title="Align Middle" onClick={() => alignElements('middle')}><AlignVerticalJustifyCenter size={18} /></button>
-        <button className="toolbar-button" title="Align Bottom" onClick={() => alignElements('bottom')}><AlignVerticalJustifyEnd size={18} /></button>
+        <button className="toolbar-button" title="Align Top" onClick={() => alignElements('top')}>
+          <AlignVerticalJustifyStart size={18} />
+        </button>
+        <button className="toolbar-button" title="Align Middle" onClick={() => alignElements('middle')}>
+          <AlignVerticalJustifyCenter size={18} />
+        </button>
+        <button className="toolbar-button" title="Align Bottom" onClick={() => alignElements('bottom')}>
+          <AlignVerticalJustifyEnd size={18} />
+        </button>
       </div>
 
       <div className="toolbar-divider" />
 
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Distribute Horizontally" onClick={() => distributeElements('horizontal')}><AlignCenter size={18} style={{ transform: 'rotate(90deg)' }} /></button>
-        <button className="toolbar-button" title="Distribute Vertically" onClick={() => distributeElements('vertical')}><AlignCenter size={18} /></button>
+        <button
+          className="toolbar-button"
+          title="Distribute Horizontally"
+          onClick={() => distributeElements('horizontal')}
+        >
+          <AlignCenter size={18} style={{ transform: 'rotate(90deg)' }} />
+        </button>
+        <button
+          className="toolbar-button"
+          title="Distribute Vertically"
+          onClick={() => distributeElements('vertical')}
+        >
+          <AlignCenter size={18} />
+        </button>
       </div>
 
       <div className="toolbar-divider" />
 
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Unite" onClick={() => applyBooleanOp('unite')}><Combine size={18} /></button>
-        <button className="toolbar-button" title="Intersect" onClick={() => applyBooleanOp('intersect')}><Scissors size={18} style={{ transform: 'rotate(45deg)' }} /></button>
-        <button className="toolbar-button" title="Subtract" onClick={() => applyBooleanOp('subtract')}><Scissors size={18} /></button>
-        <button className="toolbar-button" title="Exclude" onClick={() => applyBooleanOp('exclude')}><Box size={18} /></button>
+        <button className="toolbar-button" title="Unite" onClick={() => applyBooleanOp('unite')}>
+          <Combine size={18} />
+        </button>
+        <button className="toolbar-button" title="Intersect" onClick={() => applyBooleanOp('intersect')}>
+          <Scissors size={18} style={{ transform: 'rotate(45deg)' }} />
+        </button>
+        <button className="toolbar-button" title="Subtract" onClick={() => applyBooleanOp('subtract')}>
+          <Scissors size={18} />
+        </button>
+        <button className="toolbar-button" title="Exclude" onClick={() => applyBooleanOp('exclude')}>
+          <Box size={18} />
+        </button>
       </div>
       <div className="toolbar-spacer" />
       <div className="toolbar-group">
-        <button className="toolbar-button" title="Snap"><Grid3X3 size={18} /></button>
-        <button className="toolbar-button" title="Zoom"><ZoomIn size={18} /></button>
-        <button className="toolbar-button active" title="Preview"><Power size={18} /></button>
+        <button className="toolbar-button" title="Snap">
+          <Grid3X3 size={18} />
+        </button>
+        <button className="toolbar-button" title="Zoom">
+          <ZoomIn size={18} />
+        </button>
+        <button className="toolbar-button active" title="Preview">
+          <Power size={18} />
+        </button>
       </div>
-      <button className="export-button" onClick={handleExport}>Export</button>
+      <button className="export-button" onClick={handleExport}>
+        Export
+      </button>
     </div>
   )
 }

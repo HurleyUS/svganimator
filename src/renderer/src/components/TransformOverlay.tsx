@@ -1,49 +1,71 @@
-import React from 'react'
-import { useStore, SVGElementNode } from '../store/useStore'
 import { motion } from 'framer-motion'
+import { type SVGElementNode, useStore } from '../store/useStore'
+import { getElementBounds, moveElementAttributes } from '../utils/geometry'
+import { findElementById } from '../utils/svgTree'
 
+type DragInfo = { delta: { x: number; y: number } }
+
+const MIN_IMPORTED_SIZE = 8
+
+function hasImportedBounds(attributes: SVGElementNode['attributes']) {
+  return attributes['data-bbox-width'] !== undefined && attributes['data-bbox-height'] !== undefined
+}
+
+function getResizedImportedAttributes(
+  element: SVGElementNode,
+  corner: string,
+  dx: number,
+  dy: number
+): SVGElementNode['attributes'] {
+  const bbox = getElementBounds(element, 100)
+  const nextWidth = Math.max(MIN_IMPORTED_SIZE, bbox.w + (corner.includes('e') ? dx : -dx))
+  const nextHeight = Math.max(MIN_IMPORTED_SIZE, bbox.h + (corner.includes('s') ? dy : -dy))
+  const nextX = corner.includes('w') ? bbox.x + (bbox.w - nextWidth) : bbox.x
+  const nextY = corner.includes('n') ? bbox.y + (bbox.h - nextHeight) : bbox.y
+
+  return {
+    ...element.attributes,
+    'data-bbox-x': nextX.toString(),
+    'data-bbox-y': nextY.toString(),
+    'data-bbox-width': nextWidth.toString(),
+    'data-bbox-height': nextHeight.toString(),
+    transform:
+      `translate(${nextX} ${nextY}) scale(${nextWidth / bbox.w} ${nextHeight / bbox.h}) translate(${-bbox.x} ${-bbox.y}) ${element.attributes.transform || ''}`.trim()
+  }
+}
+
+function getResizedPrimitiveAttributes(
+  element: SVGElementNode,
+  corner: string,
+  dx: number,
+  dy: number
+): SVGElementNode['attributes'] {
+  const attributes = { ...element.attributes }
+  if (corner.includes('e')) attributes.width = (parseFloat(element.attributes.width || '0') + dx).toString()
+  if (corner.includes('s')) attributes.height = (parseFloat(element.attributes.height || '0') + dy).toString()
+  if (element.type === 'circle' && attributes.width)
+    attributes.r = (parseFloat(attributes.width) / 2).toString()
+  return attributes
+}
+
+/** Draws draggable resize handles for the currently selected SVG element. */
 export const TransformOverlay = () => {
   const { selectedElementIds, elements, updateElement, zoom, pan } = useStore()
-  
-  const findElement = (nodes: SVGElementNode[], id: string): SVGElementNode | undefined => {
-    for (const node of nodes) {
-      if (node.id === id) return node
-      const found = findElement(node.children, id)
-      if (found) return found
-    }
-    return undefined
-  }
 
-  const selectedElement = selectedElementIds.length > 0 
-    ? findElement(elements, selectedElementIds[0]) 
-    : undefined
+  const selectedElement =
+    selectedElementIds.length > 0 ? findElementById(elements, selectedElementIds[0]) : undefined
 
   if (!selectedElement) return null
 
-  const getBBox = (el: SVGElementNode) => {
-    if (el.attributes['data-bbox-x'] && el.attributes['data-bbox-y']) {
-      return {
-        x: parseFloat(el.attributes['data-bbox-x']),
-        y: parseFloat(el.attributes['data-bbox-y']),
-        w: parseFloat(el.attributes['data-bbox-width'] || '100'),
-        h: parseFloat(el.attributes['data-bbox-height'] || '100')
-      }
-    }
+  const bbox = getElementBounds(selectedElement, 100)
 
-    const x = parseFloat(el.attributes.x || el.attributes.cx || '0')
-    const y = parseFloat(el.attributes.y || el.attributes.cy || '0')
-    const w = parseFloat(el.attributes.width || (el.attributes.r ? String(parseFloat(el.attributes.r)*2) : '100'))
-    const h = parseFloat(el.attributes.height || (el.attributes.r ? String(parseFloat(el.attributes.r)*2) : '100'))
-    return { x, y, w, h }
-  }
-
-  const bbox = getBBox(selectedElement)
-  
-  const handleDrag = (_: any, info: any) => {
+  const handleDrag = (_: MouseEvent | TouchEvent | PointerEvent, info: DragInfo) => {
     const dx = info.delta.x / zoom
     const dy = info.delta.y / zoom
-    
-    const updates: any = { attributes: { ...selectedElement.attributes } }
+
+    const updates: Partial<SVGElementNode> = { attributes: { ...selectedElement.attributes } }
+    if (!updates.attributes) return
+
     if (updates.attributes['data-bbox-x'] !== undefined && updates.attributes['data-bbox-y'] !== undefined) {
       const nextX = parseFloat(updates.attributes['data-bbox-x']) + dx
       const nextY = parseFloat(updates.attributes['data-bbox-y']) + dy
@@ -62,63 +84,22 @@ export const TransformOverlay = () => {
       return
     }
 
-    if (selectedElement.attributes.x !== undefined) {
-      updates.attributes.x = (parseFloat(selectedElement.attributes.x) + dx).toString()
-    }
-    if (selectedElement.attributes.y !== undefined) {
-      updates.attributes.y = (parseFloat(selectedElement.attributes.y) + dy).toString()
-    }
-    if (selectedElement.attributes.cx !== undefined) {
-      updates.attributes.cx = (parseFloat(selectedElement.attributes.cx) + dx).toString()
-    }
-    if (selectedElement.attributes.cy !== undefined) {
-      updates.attributes.cy = (parseFloat(selectedElement.attributes.cy) + dy).toString()
-    }
-    
-    updateElement(selectedElement.id, updates)
+    updateElement(selectedElement.id, { attributes: moveElementAttributes(selectedElement, dx, dy) })
   }
 
-  const handleResize = (corner: string, _: any, info: any) => {
+  const handleResize = (corner: string, _: MouseEvent | TouchEvent | PointerEvent, info: DragInfo) => {
     const dx = info.delta.x / zoom
     const dy = info.delta.y / zoom
-    const updates: any = { attributes: { ...selectedElement.attributes } }
+    const attributes = hasImportedBounds(selectedElement.attributes)
+      ? getResizedImportedAttributes(selectedElement, corner, dx, dy)
+      : getResizedPrimitiveAttributes(selectedElement, corner, dx, dy)
 
-    if (updates.attributes['data-bbox-width'] !== undefined && updates.attributes['data-bbox-height'] !== undefined) {
-      const bbox = getBBox(selectedElement)
-      const nextWidth = Math.max(8, bbox.w + (corner.includes('e') ? dx : -dx))
-      const nextHeight = Math.max(8, bbox.h + (corner.includes('s') ? dy : -dy))
-      const scaleX = nextWidth / bbox.w
-      const scaleY = nextHeight / bbox.h
-      const nextX = corner.includes('w') ? bbox.x + (bbox.w - nextWidth) : bbox.x
-      const nextY = corner.includes('n') ? bbox.y + (bbox.h - nextHeight) : bbox.y
-
-      updates.attributes['data-bbox-x'] = nextX.toString()
-      updates.attributes['data-bbox-y'] = nextY.toString()
-      updates.attributes['data-bbox-width'] = nextWidth.toString()
-      updates.attributes['data-bbox-height'] = nextHeight.toString()
-      updates.attributes.transform = `translate(${nextX} ${nextY}) scale(${scaleX} ${scaleY}) translate(${-bbox.x} ${-bbox.y}) ${updates.attributes.transform || ''}`.trim()
-
-      updateElement(selectedElement.id, updates)
-      return
-    }
-
-    if (corner.includes('e')) {
-      updates.attributes.width = (parseFloat(selectedElement.attributes.width || '0') + dx).toString()
-    }
-    if (corner.includes('s')) {
-      updates.attributes.height = (parseFloat(selectedElement.attributes.height || '0') + dy).toString()
-    }
-    // Simplification for circle
-    if (selectedElement.type === 'circle' && updates.attributes.width) {
-       updates.attributes.r = (parseFloat(updates.attributes.width) / 2).toString()
-    }
-
-    updateElement(selectedElement.id, updates)
+    updateElement(selectedElement.id, { attributes })
   }
 
   return (
     <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-      <motion.div 
+      <motion.div
         drag
         dragMomentum={false}
         onDrag={handleDrag}
@@ -141,7 +122,7 @@ export const TransformOverlay = () => {
           { id: 'sw', cursor: 'sw-resize', left: -4, bottom: -4 },
           { id: 'se', cursor: 'se-resize', right: -4, bottom: -4 }
         ].map((h) => (
-          <motion.div 
+          <motion.div
             key={h.id}
             drag
             dragMomentum={false}

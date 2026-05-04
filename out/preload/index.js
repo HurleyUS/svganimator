@@ -1,5 +1,23 @@
 "use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const electron = require("electron");
+function _interopNamespaceDefault(e) {
+  const n = Object.create(null, { [Symbol.toStringTag]: { value: "Module" } });
+  if (e) {
+    for (const k in e) {
+      if (k !== "default") {
+        const d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: () => e[k]
+        });
+      }
+    }
+  }
+  n.default = e;
+  return Object.freeze(n);
+}
+const electron__namespace = /* @__PURE__ */ _interopNamespaceDefault(electron);
 const electronAPI = {
   ipcRenderer: {
     send(channel, ...args) {
@@ -78,12 +96,23 @@ const electronAPI = {
     }
   }
 };
-if (process.contextIsolated) {
+const contextBridge = electron__namespace.contextBridge ?? electron__namespace.default?.contextBridge;
+function exposeElectronApi(bridge = contextBridge, api = electronAPI) {
+  if (process.contextIsolated) {
+    exposeIsolatedApi(bridge, api);
+    return;
+  }
+  exposeGlobalApi(api);
+}
+function exposeIsolatedApi(bridge, api) {
   try {
-    electron.contextBridge.exposeInMainWorld("electron", electronAPI);
+    bridge?.exposeInMainWorld("electron", api);
   } catch (error) {
     console.error(error);
   }
-} else {
-  window.electron = electronAPI;
 }
+function exposeGlobalApi(api) {
+  window.electron = api;
+}
+exposeElectronApi();
+exports.exposeElectronApi = exposeElectronApi;

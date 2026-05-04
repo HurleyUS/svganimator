@@ -1,6 +1,7 @@
 import React from 'react'
-import { useStore, SVGElementNode } from '../store/useStore'
+import { type SVGElementNode, useStore } from '../store/useStore'
 import { applyAnimations } from '../utils/interpolator'
+import { ContextMenu } from './ContextMenu'
 import { TransformOverlay } from './TransformOverlay'
 
 const toReactStyle = (style: string): React.CSSProperties => {
@@ -16,7 +17,7 @@ const toReactStyle = (style: string): React.CSSProperties => {
       const value = declaration.slice(separatorIndex + 1).trim()
       const property = rawProperty.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())
 
-      return { ...styles, [property]: value }
+      return Object.assign(styles, { [property]: value })
     }, {})
 }
 
@@ -96,8 +97,8 @@ const toReactSVGProps = (attributes: SVGElementNode['attributes']) => {
 
 const SVGNode = ({ node, onSelect }: { node: SVGElementNode; onSelect: (id: string) => void }) => {
   if (!node.isVisible) return null
-  
-  const Component = node.type as any
+
+  const Component = node.type as keyof React.JSX.IntrinsicElements
   const { children, attributes, id } = node
   const reactProps = toReactSVGProps(attributes)
 
@@ -116,6 +117,7 @@ const SVGNode = ({ node, onSelect }: { node: SVGElementNode; onSelect: (id: stri
   )
 }
 
+/** Renders the editable SVG artboard, imported artwork, pan/zoom behavior, and selection overlay. */
 export const Canvas = () => {
   const { elements, keyframes, currentTime, setSelectedElements, zoom, setZoom, pan, setPan } = useStore()
   const [isPanning, setIsPanning] = React.useState(false)
@@ -159,15 +161,15 @@ export const Canvas = () => {
   }
 
   return (
-    <div 
-      className="canvas-container" 
-      style={{ 
-        width: '100%', 
-        height: '100%', 
-        position: 'relative', 
+    <ContextMenu
+      className="canvas-container"
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
         overflow: 'hidden',
         cursor: isPanning ? 'grabbing' : 'default'
-      }} 
+      }}
       onClick={() => setSelectedElements([])}
       onWheel={handleWheel}
       onMouseDown={handleMouseDown}
@@ -188,7 +190,17 @@ export const Canvas = () => {
           </pattern>
         </defs>
         <rect width="1000" height="1000" fill="url(#canvas-grid)" />
-        <rect x="318" y="58" width="364" height="564" rx="4" fill="#ffffff" stroke="#ffc15a" strokeWidth="3" filter="drop-shadow(0 2px 4px rgba(0,0,0,.22))" />
+        <rect
+          x="318"
+          y="58"
+          width="364"
+          height="564"
+          rx="4"
+          fill="#ffffff"
+          stroke="#ffc15a"
+          strokeWidth="3"
+          filter="drop-shadow(0 2px 4px rgba(0,0,0,.22))"
+        />
         <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
           {animatedElements.map((el) => (
             <SVGNode key={el.id} node={el} onSelect={handleSelect} />
@@ -196,6 +208,6 @@ export const Canvas = () => {
         </g>
       </svg>
       <TransformOverlay />
-    </div>
+    </ContextMenu>
   )
 }

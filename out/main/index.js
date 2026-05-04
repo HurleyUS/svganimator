@@ -1,6 +1,7 @@
 "use strict";
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+const node_path = require("node:path");
 const electron = require("electron");
-const path = require("path");
 const is = {
   dev: !electron.app.isPackaged
 };
@@ -101,7 +102,7 @@ function createWindow() {
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, "../preload/index.js"),
+      preload: node_path.join(__dirname, "../preload/index.js"),
       sandbox: false
     }
   });
@@ -123,31 +124,33 @@ function createWindow() {
         }
       });
     });
-    mainWindow.webContents.on("console-message", (_event, details) => {
-      console.log(`[renderer:${details.level}] ${details.message} (${details.sourceId}:${details.lineNumber})`);
-    });
     mainWindow.webContents.on("did-fail-load", (_event, errorCode, errorDescription, validatedURL) => {
       console.error(`[renderer:load-failed] ${errorCode} ${errorDescription} ${validatedURL}`);
     });
   }
-  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
-    mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
+  if (is.dev && process.env.ELECTRON_RENDERER_URL) {
+    mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
-    mainWindow.loadFile(path.join(__dirname, "../renderer/index.html"));
+    mainWindow.loadFile(node_path.join(__dirname, "../renderer/index.html"));
   }
 }
-electron.app.whenReady().then(() => {
-  electronApp.setAppUserModelId("com.electron.svganimator");
-  electron.app.on("browser-window-created", (_, window) => {
-    optimizer.watchWindowShortcuts(window);
+function bootstrapElectronApp() {
+  electron.app.whenReady().then(() => {
+    electronApp.setAppUserModelId("com.electron.svganimator");
+    electron.app.on("browser-window-created", (_, window) => {
+      optimizer.watchWindowShortcuts(window);
+    });
+    createWindow();
+    electron.app.on("activate", () => {
+      if (electron.BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
   });
-  createWindow();
-  electron.app.on("activate", function() {
-    if (electron.BrowserWindow.getAllWindows().length === 0) createWindow();
+  electron.app.on("window-all-closed", () => {
+    if (process.platform !== "darwin") {
+      electron.app.quit();
+    }
   });
-});
-electron.app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    electron.app.quit();
-  }
-});
+}
+bootstrapElectronApp();
+exports.bootstrapElectronApp = bootstrapElectronApp;
+exports.createWindow = createWindow;

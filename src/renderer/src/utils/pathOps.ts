@@ -5,12 +5,17 @@ if (typeof document !== 'undefined') {
   paper.setup(document.createElement('canvas'))
 }
 
-export function booleanOperation(path1Data: string, path2Data: string, operation: 'unite' | 'intersect' | 'subtract' | 'exclude' | 'divide'): string[] {
+/** Runs a boolean path operation and returns the generated SVG path data. */
+export function booleanOperation(
+  path1Data: string,
+  path2Data: string,
+  operation: 'unite' | 'intersect' | 'subtract' | 'exclude' | 'divide'
+): string[] {
   const p1 = new paper.Path(path1Data)
   const p2 = new paper.Path(path2Data)
-  
+
   let result: paper.Item
-  
+
   switch (operation) {
     case 'unite':
       result = p1.unite(p2)
@@ -36,7 +41,7 @@ export function booleanOperation(path1Data: string, path2Data: string, operation
   if (result instanceof paper.CompoundPath || result instanceof paper.Path) {
     pathData.push(result.pathData)
   } else if (result instanceof paper.Group) {
-    result.children.forEach(child => {
+    result.children.forEach((child) => {
       if (child instanceof paper.Path || child instanceof paper.CompoundPath) {
         pathData.push(child.pathData)
       }
@@ -46,6 +51,7 @@ export function booleanOperation(path1Data: string, path2Data: string, operation
   return pathData
 }
 
+/** Converts supported primitive SVG shapes into path data. */
 export function shapeToPath(type: string, attributes: Record<string, string>): string {
   let path: paper.Path | null = null
 

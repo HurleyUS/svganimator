@@ -1,6 +1,7 @@
+import { Box, ChevronDown, ChevronRight, Eye, EyeOff, Lock, Unlock } from 'lucide-react'
 import React from 'react'
-import { useStore, SVGElementNode } from '../store/useStore'
-import { ChevronRight, ChevronDown, Eye, EyeOff, Lock, Unlock, Box } from 'lucide-react'
+import { type SVGElementNode, useStore } from '../store/useStore'
+import { ContextMenu } from './ContextMenu'
 
 const LayerItem = ({ node, depth = 0 }: { node: SVGElementNode; depth?: number }) => {
   const [isOpen, setIsOpen] = React.useState(true)
@@ -19,21 +20,37 @@ const LayerItem = ({ node, depth = 0 }: { node: SVGElementNode; depth?: number }
 
   return (
     <div className="layer-item-container">
-      <div 
-        className={`layer-item ${isSelected ? 'selected' : ''}`}
-        style={{ paddingLeft: `${depth * 12 + 4}px` }}
-        onClick={() => setSelectedElements([node.id])}
-      >
-        <div className="layer-expander" onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}>
-          {node.children.length > 0 ? (isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />) : <div style={{ width: 14 }} />}
+      <ContextMenu targetId={node.id} className="layer-context-host">
+        <div
+          className={`layer-item ${isSelected ? 'selected' : ''}`}
+          style={{ paddingLeft: `${depth * 12 + 4}px` }}
+          onClick={() => setSelectedElements([node.id])}
+        >
+          <div
+            className="layer-expander"
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsOpen(!isOpen)
+            }}
+          >
+            {node.children.length > 0 ? (
+              isOpen ? (
+                <ChevronDown size={14} />
+              ) : (
+                <ChevronRight size={14} />
+              )
+            ) : (
+              <div style={{ width: 14 }} />
+            )}
+          </div>
+          <Box size={14} className="layer-icon" />
+          <span className="layer-name">{node.name}</span>
+          <div className="layer-actions">
+            <div onClick={toggleVisibility}>{node.isVisible ? <Eye size={14} /> : <EyeOff size={14} />}</div>
+            <div onClick={toggleLock}>{node.isLocked ? <Lock size={14} /> : <Unlock size={14} />}</div>
+          </div>
         </div>
-        <Box size={14} className="layer-icon" />
-        <span className="layer-name">{node.name}</span>
-        <div className="layer-actions">
-          <div onClick={toggleVisibility}>{node.isVisible ? <Eye size={14} /> : <EyeOff size={14} />}</div>
-          <div onClick={toggleLock}>{node.isLocked ? <Lock size={14} /> : <Unlock size={14} />}</div>
-        </div>
-      </div>
+      </ContextMenu>
       {isOpen && node.children.length > 0 && (
         <div className="layer-children">
           {node.children.map((child) => (
@@ -45,6 +62,7 @@ const LayerItem = ({ node, depth = 0 }: { node: SVGElementNode; depth?: number }
   )
 }
 
+/** Displays the SVG layer tree with selection, visibility, and lock controls. */
 export const Sidebar = () => {
   const { elements } = useStore()
 
