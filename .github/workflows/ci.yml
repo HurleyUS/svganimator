@@ -37,8 +37,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ -f bun.lock ] || [ -f bun.lockb ] || [ -f package-lock.json ]; then
+          if [ -f bun.lock ]; then
             bun install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f bun.lockb ]; then
+            bun install --frozen-lockfile || bun install --no-save
           else
             bun install --no-save
           fi
