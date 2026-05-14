@@ -28,8 +28,12 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const downloadPayload = (payload: ReturnType<typeof createSvgExportPayload>) => {
-  const url = URL.createObjectURL(new Blob([payload.contents], { type: payload.mimeType }));
+const downloadPayload = (
+  payload: ReturnType<typeof createSvgExportPayload>,
+) => {
+  const url = URL.createObjectURL(
+    new Blob([payload.contents], { type: payload.mimeType }),
+  );
   const anchor = document.createElement("a");
   anchor.href = url;
   anchor.download = payload.name;
@@ -37,9 +41,15 @@ const downloadPayload = (payload: ReturnType<typeof createSvgExportPayload>) => 
   URL.revokeObjectURL(url);
 };
 
-const downloadRenderedExport = (payload: Awaited<ReturnType<typeof renderSvgAnimationExport>>) => {
-  const bytes = Uint8Array.from(atob(payload.base64), (character) => character.charCodeAt(0));
-  const url = URL.createObjectURL(new Blob([bytes], { type: payload.mimeType }));
+const downloadRenderedExport = (
+  payload: Awaited<ReturnType<typeof renderSvgAnimationExport>>,
+) => {
+  const bytes = Uint8Array.from(atob(payload.base64), (character) =>
+    character.charCodeAt(0),
+  );
+  const url = URL.createObjectURL(
+    new Blob([bytes], { type: payload.mimeType }),
+  );
   const anchor = document.createElement("a");
   anchor.href = url;
   anchor.download = payload.name;
@@ -63,10 +73,18 @@ const renderPreviewElement = (element: SvgElement) => {
   return (
     <g key={element.id}>
       <title>{element.name}</title>
-      {element.type === "circle" ? <circle {...element.attributes}>{childElements}</circle> : null}
-      {element.type === "rect" ? <rect {...element.attributes}>{childElements}</rect> : null}
-      {element.type === "path" ? <path {...element.attributes}>{childElements}</path> : null}
-      {element.type === "g" ? <g {...element.attributes}>{childElements}</g> : null}
+      {element.type === "circle" ? (
+        <circle {...element.attributes}>{childElements}</circle>
+      ) : null}
+      {element.type === "rect" ? (
+        <rect {...element.attributes}>{childElements}</rect>
+      ) : null}
+      {element.type === "path" ? (
+        <path {...element.attributes}>{childElements}</path>
+      ) : null}
+      {element.type === "g" ? (
+        <g {...element.attributes}>{childElements}</g>
+      ) : null}
     </g>
   );
 };
@@ -78,7 +96,11 @@ function SvgPreview({
   currentTime: number;
   project: SvgAnimationProject;
 }) {
-  const animatedElements = applySvgAnimations(project.elements, currentTime, project.keyframes);
+  const animatedElements = applySvgAnimations(
+    project.elements,
+    currentTime,
+    project.keyframes,
+  );
 
   return (
     <svg aria-label={project.name} role="img" viewBox={project.viewBox}>
@@ -105,11 +127,15 @@ function AppHeader() {
 
 function ProjectSidebar() {
   const projects = useSvgWorkspaceStore((state) => state.projects);
-  const selectedProjectId = useSvgWorkspaceStore((state) => state.selectedProjectId);
+  const selectedProjectId = useSvgWorkspaceStore(
+    (state) => state.selectedProjectId,
+  );
   const selectProject = useSvgWorkspaceStore((state) => state.selectProject);
   const createProject = useSvgWorkspaceStore((state) => state.createProject);
   const selectedProject =
-    projects.find((project) => project.id === selectedProjectId) ?? projects[0] ?? null;
+    projects.find((project) => project.id === selectedProjectId) ??
+    projects[0] ??
+    null;
 
   if (!selectedProject) {
     return null;
@@ -125,7 +151,9 @@ function ProjectSidebar() {
         {projects.map((project) => (
           <button
             className={
-              project.id === selectedProject.id ? "svga-project is-active" : "svga-project"
+              project.id === selectedProject.id
+                ? "svga-project is-active"
+                : "svga-project"
             }
             key={project.id}
             onClick={() => selectProject(project.id)}
@@ -142,11 +170,15 @@ function ProjectSidebar() {
 
 function AnimationStage() {
   const projects = useSvgWorkspaceStore((state) => state.projects);
-  const selectedProjectId = useSvgWorkspaceStore((state) => state.selectedProjectId);
+  const selectedProjectId = useSvgWorkspaceStore(
+    (state) => state.selectedProjectId,
+  );
   const currentTime = useSvgWorkspaceStore((state) => state.currentTime);
   const setCurrentTime = useSvgWorkspaceStore((state) => state.setCurrentTime);
   const selectedProject =
-    projects.find((project) => project.id === selectedProjectId) ?? projects[0] ?? null;
+    projects.find((project) => project.id === selectedProjectId) ??
+    projects[0] ??
+    null;
 
   if (!selectedProject) {
     return null;
@@ -181,14 +213,26 @@ function AnimationStage() {
 
 function ProjectInspector() {
   const projects = useSvgWorkspaceStore((state) => state.projects);
-  const selectedProjectId = useSvgWorkspaceStore((state) => state.selectedProjectId);
-  const addCollaborator = useSvgWorkspaceStore((state) => state.addCollaborator);
+  const selectedProjectId = useSvgWorkspaceStore(
+    (state) => state.selectedProjectId,
+  );
+  const addCollaborator = useSvgWorkspaceStore(
+    (state) => state.addCollaborator,
+  );
   const exportFormat = useSvgWorkspaceStore((state) => state.exportFormat);
-  const setExportFormat = useSvgWorkspaceStore((state) => state.setExportFormat);
-  const exportSelectedProject = useSvgWorkspaceStore((state) => state.exportSelectedProject);
-  const selectedElementIds = useSvgWorkspaceStore((state) => state.selectedElementIds);
+  const setExportFormat = useSvgWorkspaceStore(
+    (state) => state.setExportFormat,
+  );
+  const exportSelectedProject = useSvgWorkspaceStore(
+    (state) => state.exportSelectedProject,
+  );
+  const selectedElementIds = useSvgWorkspaceStore(
+    (state) => state.selectedElementIds,
+  );
   const selectedProject =
-    projects.find((project) => project.id === selectedProjectId) ?? projects[0] ?? null;
+    projects.find((project) => project.id === selectedProjectId) ??
+    projects[0] ??
+    null;
   const inviteForm = useForm({
     defaultValues: {
       email: "",
@@ -209,8 +253,9 @@ function ProjectInspector() {
       <section>
         <h2>{selectedProject.name}</h2>
         <p>
-          Standalone exports are plain `.svg` documents with embedded CSS keyframes and a small
-          timeline script. No `.svganim` format is introduced.
+          Standalone exports are plain `.svg` documents with embedded CSS
+          keyframes and a small timeline script. No `.svganim` format is
+          introduced.
         </p>
         <div className="svga-track-list">
           {animatableProperties.map((property) => (
@@ -264,7 +309,11 @@ function ProjectInspector() {
         <div className="svga-format-grid">
           {svgExportFormatSchema.options.map((format) => (
             <button
-              className={format === exportFormat ? "svga-format is-active" : "svga-format"}
+              className={
+                format === exportFormat
+                  ? "svga-format is-active"
+                  : "svga-format"
+              }
               key={format}
               onClick={() => setExportFormat(format)}
               type="button"
@@ -294,12 +343,16 @@ function ProjectInspector() {
           Export {exportFormat.toUpperCase()}
         </Button>
         <p className="svga-note">
-          GIF and MKV render on the server from static SVG frames generated from the same timeline
-          model.
+          GIF and MKV render on the server from static SVG frames generated from
+          the same timeline model.
         </p>
         <Button
           className="svga-export svga-secondary"
-          onClick={() => void createCheckoutSession({ data: { priceId: "price_export_pack" } })}
+          onClick={() =>
+            void createCheckoutSession({
+              data: { priceId: "price_export_pack" },
+            })
+          }
         >
           Open export billing
         </Button>

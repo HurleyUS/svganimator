@@ -48,7 +48,7 @@ jobs:
           fi
 
       - name: Format
-        run: bun run format
+        run: bunx --bun prettier --write . --ignore-path .gitignore --ignore-unknown
 
       - name: Verify formatter produced no diff
         run: git diff --exit-code

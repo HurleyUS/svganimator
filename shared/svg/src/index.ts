@@ -2,7 +2,13 @@
 import { z } from "zod";
 
 const keyframeValueSchema = z.union([z.string(), z.number()]);
-const animatableGroupSchema = z.enum(["Transform", "Appearance", "Stroke", "Path", "Filter"]);
+const animatableGroupSchema = z.enum([
+  "Transform",
+  "Appearance",
+  "Stroke",
+  "Path",
+  "Filter",
+]);
 
 /** Supported deliverable targets for animated SVG projects. */
 export const svgExportFormatSchema = z.enum(["svg", "lottie", "gif", "mkv"]);
@@ -116,7 +122,8 @@ const escapeAttribute = (value: string) =>
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
 
-const escapeScript = (value: string) => value.replaceAll("</script>", "<\\/script>");
+const escapeScript = (value: string) =>
+  value.replaceAll("</script>", "<\\/script>");
 
 const safePercent = (time: number, duration: number) =>
   Math.max(0, Math.min(100, (time / duration) * 100)).toFixed(2);
@@ -224,14 +231,16 @@ const frameTrackValue = (track: Array<SvgKeyframe>, time: number) => {
   }
 
   const next = sorted.find((keyframe) => keyframe.time >= time) ?? last;
-  const previous = sorted.findLast((keyframe) => keyframe.time <= time) ?? first;
+  const previous =
+    sorted.findLast((keyframe) => keyframe.time <= time) ?? first;
   const span = Math.max(1, next.time - previous.time);
   const progress = (time - previous.time) / span;
   const previousTranslate = parseTranslateX(String(previous.value));
   const nextTranslate = parseTranslateX(String(next.value));
 
   if (previousTranslate !== null && nextTranslate !== null) {
-    const value = previousTranslate + (nextTranslate - previousTranslate) * progress;
+    const value =
+      previousTranslate + (nextTranslate - previousTranslate) * progress;
 
     return `translate(${value.toFixed(3)} 0)`;
   }
@@ -239,9 +248,16 @@ const frameTrackValue = (track: Array<SvgKeyframe>, time: number) => {
   return String(previous.value);
 };
 
-const keyframesForProperty = (elementId: string, property: string, keyframes: Array<SvgKeyframe>) =>
+const keyframesForProperty = (
+  elementId: string,
+  property: string,
+  keyframes: Array<SvgKeyframe>,
+) =>
   keyframes
-    .filter((keyframe) => keyframe.elementId === elementId && keyframe.property === property)
+    .filter(
+      (keyframe) =>
+        keyframe.elementId === elementId && keyframe.property === property,
+    )
     .toSorted((first, second) => first.time - second.time);
 
 const boundaryKeyframeValue = (
@@ -267,21 +283,32 @@ const boundaryKeyframeValue = (
   return null;
 };
 
-const lerp = (from: number, to: number, progress: number) => from + (to - from) * progress;
+const lerp = (from: number, to: number, progress: number) =>
+  from + (to - from) * progress;
 
-const matchNumber = (match: RegExpExecArray | null, index: number, fallback: number) => {
+const matchNumber = (
+  match: RegExpExecArray | null,
+  index: number,
+  fallback: number,
+) => {
   const value = match?.[index];
 
   return value ? Number.parseFloat(value) : fallback;
 };
 
-const interpolateNumbers = (from: string | number, to: string | number, progress: number) => {
+const interpolateNumbers = (
+  from: string | number,
+  to: string | number,
+  progress: number,
+) => {
   if (typeof from === "number" && typeof to === "number") {
     return lerp(from, to, progress);
   }
 
-  const previousNumber = typeof from === "string" ? Number.parseFloat(from) : Number.NaN;
-  const nextNumber = typeof to === "string" ? Number.parseFloat(to) : Number.NaN;
+  const previousNumber =
+    typeof from === "string" ? Number.parseFloat(from) : Number.NaN;
+  const nextNumber =
+    typeof to === "string" ? Number.parseFloat(to) : Number.NaN;
 
   return Number.isFinite(previousNumber) && Number.isFinite(nextNumber)
     ? lerp(previousNumber, nextNumber, progress)
@@ -289,8 +316,11 @@ const interpolateNumbers = (from: string | number, to: string | number, progress
 };
 
 const transformNumbers = (value: string) => {
-  const translate = /translate\((-?\d+(?:\.\d+)?)(?:[\s,]+(-?\d+(?:\.\d+)?))?\)/.exec(value);
-  const scale = /scale\((-?\d+(?:\.\d+)?)(?:[\s,]+(-?\d+(?:\.\d+)?))?\)/.exec(value);
+  const translate =
+    /translate\((-?\d+(?:\.\d+)?)(?:[\s,]+(-?\d+(?:\.\d+)?))?\)/.exec(value);
+  const scale = /scale\((-?\d+(?:\.\d+)?)(?:[\s,]+(-?\d+(?:\.\d+)?))?\)/.exec(
+    value,
+  );
   const rotate = /rotate\((-?\d+(?:\.\d+)?)/.exec(value);
   const scaleX = matchNumber(scale, 1, 1);
 
@@ -327,7 +357,11 @@ const interpolateValue = (
   }
 
   if (property === "transform") {
-    return interpolateTransform(String(previous.value), String(next.value), progress);
+    return interpolateTransform(
+      String(previous.value),
+      String(next.value),
+      progress,
+    );
   }
 
   return progress < 0.5 ? previous.value : next.value;
@@ -340,14 +374,24 @@ const animatedValue = (
   keyframes: Array<SvgKeyframe>,
   defaultValue: string | number,
 ) => {
-  const propertyKeyframes = keyframesForProperty(elementId, property, keyframes);
-  const boundaryValue = boundaryKeyframeValue(time, propertyKeyframes, defaultValue);
+  const propertyKeyframes = keyframesForProperty(
+    elementId,
+    property,
+    keyframes,
+  );
+  const boundaryValue = boundaryKeyframeValue(
+    time,
+    propertyKeyframes,
+    defaultValue,
+  );
 
   if (boundaryValue !== null) {
     return boundaryValue;
   }
 
-  const nextIndex = propertyKeyframes.findIndex((keyframe) => keyframe.time > time);
+  const nextIndex = propertyKeyframes.findIndex(
+    (keyframe) => keyframe.time > time,
+  );
   const previous = propertyKeyframes[Math.max(0, nextIndex - 1)];
   const next = propertyKeyframes[nextIndex];
 
@@ -363,7 +407,11 @@ const animatedValue = (
   );
 };
 
-const frameAttributes = (node: SvgElement, project: SvgAnimationProject, time: number) => {
+const frameAttributes = (
+  node: SvgElement,
+  project: SvgAnimationProject,
+  time: number,
+) => {
   const entries = Object.entries({ ...node.attributes, id: node.id });
   const tracks = groupedKeyframes(project.keyframes).get(node.id);
 
@@ -407,7 +455,10 @@ const parseElementNode = (node: Element) => {
   }
 
   const attributes = Object.fromEntries(
-    Array.from(node.attributes).map((attribute) => [attribute.name, attribute.value]),
+    Array.from(node.attributes).map((attribute) => [
+      attribute.name,
+      attribute.value,
+    ]),
   );
   const children = Array.from(node.children)
     .map((child) => {
@@ -418,7 +469,10 @@ const parseElementNode = (node: Element) => {
       }
 
       const childAttributes = Object.fromEntries(
-        Array.from(child.attributes).map((attribute) => [attribute.name, attribute.value]),
+        Array.from(child.attributes).map((attribute) => [
+          attribute.name,
+          attribute.value,
+        ]),
       );
       const childAttributeMap = new Map(Object.entries(childAttributes));
       const childId = childAttributeMap.get("id");
@@ -514,7 +568,8 @@ const groupedKeyframes = (keyframes: Array<SvgKeyframe>) => {
   const grouped = new Map<string, Map<string, Array<SvgKeyframe>>>();
 
   for (const keyframe of keyframes) {
-    const elementTracks = grouped.get(keyframe.elementId) ?? new Map<string, Array<SvgKeyframe>>();
+    const elementTracks =
+      grouped.get(keyframe.elementId) ?? new Map<string, Array<SvgKeyframe>>();
     const propertyTrack = elementTracks.get(keyframe.property) ?? [];
     propertyTrack.push(keyframe);
     elementTracks.set(keyframe.property, propertyTrack);
@@ -524,7 +579,11 @@ const groupedKeyframes = (keyframes: Array<SvgKeyframe>) => {
   return grouped;
 };
 
-const renderElement = (node: SvgElement, project: SvgAnimationProject, time: number) => {
+const renderElement = (
+  node: SvgElement,
+  project: SvgAnimationProject,
+  time: number,
+) => {
   if (!node.isVisible) {
     return "";
   }
@@ -535,7 +594,10 @@ const renderElement = (node: SvgElement, project: SvgAnimationProject, time: num
   const children = node.children
     .filter((child) => child.isVisible)
     .map((child) => {
-      const childAttributes = Object.entries({ ...child.attributes, id: child.id })
+      const childAttributes = Object.entries({
+        ...child.attributes,
+        id: child.id,
+      })
         .map(([key, value]) => `${key}="${escapeAttribute(String(value))}"`)
         .join(" ");
 
@@ -573,7 +635,9 @@ const renderStandaloneStyles = (project: SvgAnimationProject) => {
           return `    ${percent}% { ${property}: ${String(keyframe.value)}; }`;
         })
         .join("\n");
-      blocks.push(`#${elementId} { animation: ${name} ${project.duration}ms infinite linear; }`);
+      blocks.push(
+        `#${elementId} { animation: ${name} ${project.duration}ms infinite linear; }`,
+      );
       blocks.push(`@keyframes ${name} {\n${keyframes}\n  }`);
     }
   }
@@ -689,7 +753,10 @@ export function serializeLottie(project: SvgAnimationProject) {
 }
 
 /** Creates an export payload for SVG, Lottie, or queued raster/video renderer formats. */
-export function createSvgExportPayload(project: SvgAnimationProject, format: SvgExportFormat) {
+export function createSvgExportPayload(
+  project: SvgAnimationProject,
+  format: SvgExportFormat,
+) {
   const parsed = svgAnimationProjectSchema.parse(project);
   const basename = slugify(parsed.name) || "animation";
 
@@ -731,11 +798,16 @@ export function createSvgExportPayload(project: SvgAnimationProject, format: Svg
 }
 
 /** Adds an email collaborator to a project with an editor role by default. */
-export function addSvgProjectCollaborator(project: SvgAnimationProject, email: string) {
+export function addSvgProjectCollaborator(
+  project: SvgAnimationProject,
+  email: string,
+) {
   return svgAnimationProjectSchema.parse({
     ...project,
     collaborators: [
-      ...project.collaborators.filter((collaborator) => collaborator.email !== email),
+      ...project.collaborators.filter(
+        (collaborator) => collaborator.email !== email,
+      ),
       {
         email,
         invitedAt: now(),
@@ -798,13 +870,17 @@ export function getAnimatableProperties(element?: SvgElement) {
     return commonProperties;
   }
 
-  return element.type === "path" || new Map(Object.entries(element.attributes)).has("d")
+  return element.type === "path" ||
+    new Map(Object.entries(element.attributes)).has("d")
     ? [...pathProperties, ...commonProperties]
     : commonProperties;
 }
 
 /** Reads the current value for an animatable property on an SVG element. */
-export function getAnimatableValue(element: SvgElement, property: AnimatableProperty) {
+export function getAnimatableValue(
+  element: SvgElement,
+  property: AnimatableProperty,
+) {
   return element.attributes[property.property] ?? property.fallback;
 }
 
@@ -857,7 +933,11 @@ export function applySvgAnimations(
       children: element.children.map((child) =>
         svgElementSchema.shape.children.element.parse({
           ...child,
-          attributes: frameAttributes(child, { ...emptyProject, keyframes }, time),
+          attributes: frameAttributes(
+            child,
+            { ...emptyProject, keyframes },
+            time,
+          ),
         }),
       ),
     });

@@ -19,9 +19,11 @@ if (findings.length > 0) {
   printFindings(findings);
 }
 
-const failed = [typecheck.status, biome.status, findings.length > 0 ? 1 : 0].some(
-  (status) => status !== 0,
-);
+const failed = [
+  typecheck.status,
+  biome.status,
+  findings.length > 0 ? 1 : 0,
+].some((status) => status !== 0);
 
 if (failed) {
   process.exit(typecheck.status || biome.status || 1);
@@ -33,10 +35,14 @@ if (existsSync(freviewPath)) {
   const freview = run(freviewPath, []);
 
   if (freview.status !== 0) {
-    process.stderr.write(`~/bin/freview exited with code ${freview.status ?? 1}.\n`);
+    process.stderr.write(
+      `~/bin/freview exited with code ${freview.status ?? 1}.\n`,
+    );
   }
 
   process.exit(0);
 }
 
-process.stdout.write("Biome and Canaveral lint checks passed. ~/bin/freview was not found.\n");
+process.stdout.write(
+  "Biome and Canaveral lint checks passed. ~/bin/freview was not found.\n",
+);

@@ -53,7 +53,9 @@ export const useSvgWorkspaceStore = create<SvgWorkspaceState>((set, get) => ({
   },
   createProject: () => {
     set((state) => {
-      const project = createStarterSvgProject(createProjectName(state.projects.length));
+      const project = createStarterSvgProject(
+        createProjectName(state.projects.length),
+      );
 
       return {
         projects: [project, ...state.projects],
@@ -66,8 +68,9 @@ export const useSvgWorkspaceStore = create<SvgWorkspaceState>((set, get) => ({
   exportSelectedProject: () => {
     const state = get();
     const project =
-      state.projects.find((candidate) => candidate.id === state.selectedProjectId) ??
-      starterProject;
+      state.projects.find(
+        (candidate) => candidate.id === state.selectedProjectId,
+      ) ?? starterProject;
 
     return createSvgExportPayload(project, state.exportFormat);
   },
@@ -76,7 +79,11 @@ export const useSvgWorkspaceStore = create<SvgWorkspaceState>((set, get) => ({
     set({ selectedElementIds: [elementId] });
   },
   selectProject: (projectId) => {
-    set({ currentTime: 0, selectedElementIds: [], selectedProjectId: projectId });
+    set({
+      currentTime: 0,
+      selectedElementIds: [],
+      selectedProjectId: projectId,
+    });
   },
   selectedElementIds: [],
   selectedProjectId: starterProject.id,
@@ -90,7 +97,11 @@ export const useSvgWorkspaceStore = create<SvgWorkspaceState>((set, get) => ({
     set((state) => ({
       projects: state.projects.map((project) =>
         project.id === state.selectedProjectId
-          ? { ...project, name: name.trim() || project.name, updatedAt: new Date().toISOString() }
+          ? {
+              ...project,
+              name: name.trim() || project.name,
+              updatedAt: new Date().toISOString(),
+            }
           : project,
       ),
     }));

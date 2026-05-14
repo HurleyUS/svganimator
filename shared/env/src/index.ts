@@ -32,11 +32,15 @@ export type ClientEnv = z.infer<typeof clientEnvSchema>;
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
 
 /** Parses a browser-safe environment source. */
-export function readClientEnv(source: Record<string, string | undefined>): ClientEnv {
+export function readClientEnv(
+  source: Record<string, string | undefined>,
+): ClientEnv {
   return clientEnvSchema.parse(source);
 }
 
 /** Parses a server environment source. */
-export function readServerEnv(source: Record<string, string | undefined>): ServerEnv {
+export function readServerEnv(
+  source: Record<string, string | undefined>,
+): ServerEnv {
   return serverEnvSchema.parse(source);
 }

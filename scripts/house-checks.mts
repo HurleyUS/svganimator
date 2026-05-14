@@ -11,7 +11,16 @@ const ignoredPathParts = [
   "/web/src/routeTree.gen.ts",
 ];
 
-const sourceExtensions = [".ts", ".tsx", ".mts", ".cts", ".js", ".jsx", ".mjs", ".cjs"];
+const sourceExtensions = [
+  ".ts",
+  ".tsx",
+  ".mts",
+  ".cts",
+  ".js",
+  ".jsx",
+  ".mjs",
+  ".cjs",
+];
 
 type Finding = {
   column: number;

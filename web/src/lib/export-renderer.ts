@@ -37,23 +37,33 @@ const renderMetadata = {
   width: 880,
 };
 
-const extensionForFormat = (format: z.infer<typeof renderInputSchema>["format"]) =>
-  format === "gif" ? "gif" : "mkv";
+const extensionForFormat = (
+  format: z.infer<typeof renderInputSchema>["format"],
+) => (format === "gif" ? "gif" : "mkv");
 
-const mimeTypeForFormat = (format: z.infer<typeof renderInputSchema>["format"]) =>
-  format === "gif" ? "image/gif" : "video/x-matroska";
+const mimeTypeForFormat = (
+  format: z.infer<typeof renderInputSchema>["format"],
+) => (format === "gif" ? "image/gif" : "video/x-matroska");
 
-const frameName = (index: number) => `frame-${String(index).padStart(4, "0")}.svg`;
-const rasterFrameName = (index: number) => `frame-${String(index).padStart(4, "0")}.png`;
+const frameName = (index: number) =>
+  `frame-${String(index).padStart(4, "0")}.svg`;
+const rasterFrameName = (index: number) =>
+  `frame-${String(index).padStart(4, "0")}.png`;
 
 const writeSvgFrames = async (
   directory: string,
   project: z.infer<typeof svgAnimationProjectSchema>,
 ) => {
-  const frameCount = Math.max(2, Math.ceil((project.duration / 1000) * renderMetadata.fps));
+  const frameCount = Math.max(
+    2,
+    Math.ceil((project.duration / 1000) * renderMetadata.fps),
+  );
 
   for (let index = 0; index < frameCount; index += 1) {
-    const time = Math.min(project.duration, (index / renderMetadata.fps) * 1000);
+    const time = Math.min(
+      project.duration,
+      (index / renderMetadata.fps) * 1000,
+    );
     const svg = serializeSvgFrame(project, time);
     const renderer = new Resvg(svg, {
       fitTo: {
@@ -62,7 +72,10 @@ const writeSvgFrames = async (
       },
     });
     await writeFile(join(directory, frameName(index)), svg);
-    await writeFile(join(directory, rasterFrameName(index)), renderer.render().asPng());
+    await writeFile(
+      join(directory, rasterFrameName(index)),
+      renderer.render().asPng(),
+    );
   }
 
   return frameCount;

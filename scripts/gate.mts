@@ -47,7 +47,9 @@ function bypasses() {
     .filter((arg) => arg.startsWith("--bypass="))
     .flatMap((arg) => arg.replace("--bypass=", "").split(","));
   const fromEnv = (process.env.CANAVERAL_GATE_BYPASS ?? "").split(",");
-  const bypassSet = new Set([...fromArgs, ...fromEnv].map((item) => item.trim()).filter(Boolean));
+  const bypassSet = new Set(
+    [...fromArgs, ...fromEnv].map((item) => item.trim()).filter(Boolean),
+  );
 
   if (bypassSet.has("all")) {
     return new Set(checks);
@@ -102,9 +104,16 @@ function requireReportMatch(
   failures.push(message);
 }
 
-function freviewFailures(report: string, bypassSet: Set<string>, branch: string) {
+function freviewFailures(
+  report: string,
+  bypassSet: Set<string>,
+  branch: string,
+) {
   const failures = [];
-  const health = extractNumber(report, /Health S(?:core|core:)\s*:?\s+(\d+(?:\.\d+)?)/i);
+  const health = extractNumber(
+    report,
+    /Health S(?:core|core:)\s*:?\s+(\d+(?:\.\d+)?)/i,
+  );
   const coverage = extractNumber(report, /(\d+(?:\.\d+)?)%\s+file coverage/);
   const docstrings = report.includes("✔︎ 100% docstring coverage")
     ? 100
@@ -115,7 +124,14 @@ function freviewFailures(report: string, bypassSet: Set<string>, branch: string)
 
   requireNumberMetric(failures, "health", health, 97, bypassSet, branch);
   requireNumberMetric(failures, "coverage", coverage, 100, bypassSet, branch);
-  requireNumberMetric(failures, "docstrings", docstrings, 100, bypassSet, branch);
+  requireNumberMetric(
+    failures,
+    "docstrings",
+    docstrings,
+    100,
+    bypassSet,
+    branch,
+  );
   requireNumberMetric(failures, "hotspots", hotspots, 0, bypassSet, branch);
   requireReportMatch(
     failures,
@@ -204,7 +220,9 @@ if (!isBypassed("freview", bypassSet, branch)) {
 }
 
 if (failures.length > 0) {
-  process.stderr.write(`\nCanaveral gate failed on ${branch || "unknown branch"}:\n`);
+  process.stderr.write(
+    `\nCanaveral gate failed on ${branch || "unknown branch"}:\n`,
+  );
 
   for (const failure of failures) {
     process.stderr.write(`- ${failure}\n`);

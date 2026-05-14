@@ -36,8 +36,19 @@ function devSitePaths(cwd: string, homeDirectory: () => string) {
   const slug = repoSlugFromCwd(cwd);
   const host = `${slug}.localhost`;
   const port = portForSlug(slug);
-  const caddyfilePath = path.join(homeDirectory(), ".local", "etc", "Caddyfile");
-  const snippetsDir = path.join(homeDirectory(), ".local", "etc", "caddy", "dev-sites");
+  const caddyfilePath = path.join(
+    homeDirectory(),
+    ".local",
+    "etc",
+    "Caddyfile",
+  );
+  const snippetsDir = path.join(
+    homeDirectory(),
+    ".local",
+    "etc",
+    "caddy",
+    "dev-sites",
+  );
   const snippetPath = path.join(snippetsDir, `${slug}.caddy`);
 
   return { caddyfilePath, host, port, snippetPath, snippetsDir };
@@ -53,11 +64,16 @@ function ensureDevSiteFiles(
   writeProjectSnippet(paths.snippetPath, paths.host, paths.port);
 }
 
-function loadCaddyOrExit(caddyfilePath: string, exit: (code?: number) => never) {
+function loadCaddyOrExit(
+  caddyfilePath: string,
+  exit: (code?: number) => never,
+) {
   try {
     ensureCaddyLoaded(caddyfilePath);
   } catch (error) {
-    if (!(error instanceof Error && "code" in error && error.code === "ENOENT")) {
+    if (
+      !(error instanceof Error && "code" in error && error.code === "ENOENT")
+    ) {
       throw error;
     }
 
@@ -82,7 +98,10 @@ function attachExitForwarding(
 }
 
 /** Starts the web dev server behind a Caddy-managed localhost domain. */
-export function startDevLocalhost(cwd = process.cwd(), options: StartDevLocalhostOptions = {}) {
+export function startDevLocalhost(
+  cwd = process.cwd(),
+  options: StartDevLocalhostOptions = {},
+) {
   const resolved = resolveOptions(options);
   const paths = devSitePaths(cwd, resolved.homeDirectory);
   const url = `https://${paths.host}`;

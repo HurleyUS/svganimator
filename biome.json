@@ -103,7 +103,11 @@
   },
   "overrides": [
     {
-      "includes": ["**/vite.config.ts", "mobile/app/**/*.tsx", "web/convex/**/*.ts"],
+      "includes": [
+        "**/vite.config.ts",
+        "mobile/app/**/*.tsx",
+        "web/convex/**/*.ts"
+      ],
       "linter": {
         "rules": {
           "style": {

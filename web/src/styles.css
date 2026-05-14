@@ -37,17 +37,61 @@
   --spacing-base: clamp(4px, calc(1rem * var(--gnx) / var(--swx)), 6px);
   --spacing-sm: clamp(2px, calc(var(--spacing-base) / var(--swx)), 4px);
   --spacing-xs: clamp(1px, calc(var(--spacing-sm) / var(--swx)), 3px);
-  --spacing-md: clamp(var(--spacing-base), calc(var(--spacing-base) * var(--swx)), 28px);
-  --spacing-lg: clamp(var(--spacing-md), calc(var(--spacing-md) * var(--swx)), 35px);
-  --spacing-xl: clamp(var(--spacing-lg), calc(var(--spacing-lg) * var(--swx)), 42px);
-  --spacing-2x: clamp(var(--spacing-xl), calc(var(--spacing-xl) * var(--swx)), 49px);
-  --spacing-3x: clamp(var(--spacing-2x), calc(var(--spacing-2x) * var(--swx)), 56px);
-  --spacing-4x: clamp(var(--spacing-3x), calc(var(--spacing-3x) * var(--swx)), 63px);
-  --spacing-5x: clamp(var(--spacing-4x), calc(var(--spacing-4x) * var(--swx)), 70px);
-  --spacing-6x: clamp(var(--spacing-5x), calc(var(--spacing-5x) * var(--swx)), 77px);
-  --spacing-7x: clamp(var(--spacing-6x), calc(var(--spacing-6x) * var(--swx)), 84px);
-  --spacing-8x: clamp(var(--spacing-7x), calc(var(--spacing-7x) * var(--swx)), 91px);
-  --spacing-9x: clamp(var(--spacing-8x), calc(var(--spacing-8x) * var(--swx)), 98px);
+  --spacing-md: clamp(
+    var(--spacing-base),
+    calc(var(--spacing-base) * var(--swx)),
+    28px
+  );
+  --spacing-lg: clamp(
+    var(--spacing-md),
+    calc(var(--spacing-md) * var(--swx)),
+    35px
+  );
+  --spacing-xl: clamp(
+    var(--spacing-lg),
+    calc(var(--spacing-lg) * var(--swx)),
+    42px
+  );
+  --spacing-2x: clamp(
+    var(--spacing-xl),
+    calc(var(--spacing-xl) * var(--swx)),
+    49px
+  );
+  --spacing-3x: clamp(
+    var(--spacing-2x),
+    calc(var(--spacing-2x) * var(--swx)),
+    56px
+  );
+  --spacing-4x: clamp(
+    var(--spacing-3x),
+    calc(var(--spacing-3x) * var(--swx)),
+    63px
+  );
+  --spacing-5x: clamp(
+    var(--spacing-4x),
+    calc(var(--spacing-4x) * var(--swx)),
+    70px
+  );
+  --spacing-6x: clamp(
+    var(--spacing-5x),
+    calc(var(--spacing-5x) * var(--swx)),
+    77px
+  );
+  --spacing-7x: clamp(
+    var(--spacing-6x),
+    calc(var(--spacing-6x) * var(--swx)),
+    84px
+  );
+  --spacing-8x: clamp(
+    var(--spacing-7x),
+    calc(var(--spacing-7x) * var(--swx)),
+    91px
+  );
+  --spacing-9x: clamp(
+    var(--spacing-8x),
+    calc(var(--spacing-8x) * var(--swx)),
+    98px
+  );
 
   --spacing-gw: var(--container-gw);
   --spacing-gn: var(--container-gn);
@@ -100,7 +144,11 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-success-foreground: var(--catpuccin-crust);
-  --color-success-hover: color-mix(in srgb, var(--success) 80%, var(--catpuccin-crust));
+  --color-success-hover: color-mix(
+    in srgb,
+    var(--success) 80%,
+    var(--catpuccin-crust)
+  );
   --color-success: var(--catpuccin-green);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-destructive-hover: var(--destructive-hover);
@@ -381,7 +429,11 @@
   --chart-4: var(--catpuccin-purple);
   --chart-5: var(--catpuccin-blue);
   --success-foreground: var(--catpuccin-crust);
-  --success-hover: color-mix(in srgb, var(--success) 80%, var(--catpuccin-crust));
+  --success-hover: color-mix(
+    in srgb,
+    var(--success) 80%,
+    var(--catpuccin-crust)
+  );
   --success: var(--catpuccin-green);
   --destructive-foreground: var(--catpuccin-crust);
   --destructive-hover: var(--catpuccin-maroon);
@@ -393,7 +445,11 @@
   --popover-foreground: var(--catpuccin-text);
   --popover: var(--catpuccin-surface-0);
   --primary-foreground: var(--catpuccin-crust);
-  --primary-hover: color-mix(in srgb, var(--primary) 80%, var(--catpuccin-crust));
+  --primary-hover: color-mix(
+    in srgb,
+    var(--primary) 80%,
+    var(--catpuccin-crust)
+  );
   --primary: var(--catpuccin-pink);
   --ring: var(--catpuccin-surface-0);
   --secondary-foreground: var(--catpuccin-crust);
@@ -780,8 +836,14 @@
   --mocha-mantle: #181825;
   --mocha-crust: #11111b;
 
-  --catpuccin-rosewater: light-dark(var(--latte-rosewater), var(--mocha-rosewater));
-  --catpuccin-flamingo: light-dark(var(--latte-flamingo), var(--mocha-flamingo));
+  --catpuccin-rosewater: light-dark(
+    var(--latte-rosewater),
+    var(--mocha-rosewater)
+  );
+  --catpuccin-flamingo: light-dark(
+    var(--latte-flamingo),
+    var(--mocha-flamingo)
+  );
   --catpuccin-pink: light-dark(var(--latte-pink), var(--mocha-pink));
   --catpuccin-mauve: light-dark(var(--latte-mauve), var(--mocha-mauve));
   --catpuccin-red: light-dark(var(--latte-red), var(--mocha-red));
@@ -791,65 +853,215 @@
   --catpuccin-green: light-dark(var(--latte-green), var(--mocha-green));
   --catpuccin-teal: light-dark(var(--latte-teal), var(--mocha-teal));
   --catpuccin-sky: light-dark(var(--latte-sky), var(--mocha-sky));
-  --catpuccin-sapphire: light-dark(var(--latte-sapphire), var(--mocha-sapphire));
+  --catpuccin-sapphire: light-dark(
+    var(--latte-sapphire),
+    var(--mocha-sapphire)
+  );
   --catpuccin-blue: light-dark(var(--latte-blue), var(--mocha-blue));
-  --catpuccin-lavender: light-dark(var(--latte-lavender), var(--mocha-lavender));
+  --catpuccin-lavender: light-dark(
+    var(--latte-lavender),
+    var(--mocha-lavender)
+  );
   --catpuccin-text: light-dark(var(--latte-text), var(--mocha-text));
-  --catpuccin-subtext-1: light-dark(var(--latte-subtext-1), var(--mocha-subtext-1));
-  --catpuccin-subtext-0: light-dark(var(--latte-subtext-0), var(--mocha-subtext-0));
-  --catpuccin-overlay-2: light-dark(var(--latte-overlay-2), var(--mocha-overlay-2));
-  --catpuccin-overlay-1: light-dark(var(--latte-overlay-1), var(--mocha-overlay-1));
-  --catpuccin-overlay-0: light-dark(var(--latte-overlay-0), var(--mocha-overlay-0));
-  --catpuccin-surface-2: light-dark(var(--latte-surface-2), var(--mocha-surface-2));
-  --catpuccin-surface-1: light-dark(var(--latte-surface-1), var(--mocha-surface-1));
-  --catpuccin-surface-0: light-dark(var(--latte-surface-0), var(--mocha-surface-0));
+  --catpuccin-subtext-1: light-dark(
+    var(--latte-subtext-1),
+    var(--mocha-subtext-1)
+  );
+  --catpuccin-subtext-0: light-dark(
+    var(--latte-subtext-0),
+    var(--mocha-subtext-0)
+  );
+  --catpuccin-overlay-2: light-dark(
+    var(--latte-overlay-2),
+    var(--mocha-overlay-2)
+  );
+  --catpuccin-overlay-1: light-dark(
+    var(--latte-overlay-1),
+    var(--mocha-overlay-1)
+  );
+  --catpuccin-overlay-0: light-dark(
+    var(--latte-overlay-0),
+    var(--mocha-overlay-0)
+  );
+  --catpuccin-surface-2: light-dark(
+    var(--latte-surface-2),
+    var(--mocha-surface-2)
+  );
+  --catpuccin-surface-1: light-dark(
+    var(--latte-surface-1),
+    var(--mocha-surface-1)
+  );
+  --catpuccin-surface-0: light-dark(
+    var(--latte-surface-0),
+    var(--mocha-surface-0)
+  );
   --catpuccin-base: light-dark(var(--latte-base), var(--mocha-base));
   --catpuccin-mantle: light-dark(var(--latte-mantle), var(--mocha-mantle));
   --catpuccin-crust: light-dark(var(--latte-crust), var(--mocha-crust));
 
-  --catpuccin-rosewater-100: light-dark(var(--latte-rosewater-100), var(--mocha-rosewater-100));
-  --catpuccin-rosewater-200: light-dark(var(--latte-rosewater-200), var(--mocha-rosewater-200));
-  --catpuccin-rosewater-300: light-dark(var(--latte-rosewater-300), var(--mocha-rosewater-300));
-  --catpuccin-rosewater-400: light-dark(var(--latte-rosewater-400), var(--mocha-rosewater-400));
-  --catpuccin-rosewater-500: light-dark(var(--latte-rosewater-500), var(--mocha-rosewater-500));
-  --catpuccin-rosewater-600: light-dark(var(--latte-rosewater-600), var(--mocha-rosewater-600));
-  --catpuccin-rosewater-700: light-dark(var(--latte-rosewater-700), var(--mocha-rosewater-700));
-  --catpuccin-rosewater-800: light-dark(var(--latte-rosewater-800), var(--mocha-rosewater-800));
-  --catpuccin-rosewater-900: light-dark(var(--latte-rosewater-900), var(--mocha-rosewater-900));
-  --catpuccin-rosewater-950: light-dark(var(--latte-rosewater-950), var(--mocha-rosewater-950));
+  --catpuccin-rosewater-100: light-dark(
+    var(--latte-rosewater-100),
+    var(--mocha-rosewater-100)
+  );
+  --catpuccin-rosewater-200: light-dark(
+    var(--latte-rosewater-200),
+    var(--mocha-rosewater-200)
+  );
+  --catpuccin-rosewater-300: light-dark(
+    var(--latte-rosewater-300),
+    var(--mocha-rosewater-300)
+  );
+  --catpuccin-rosewater-400: light-dark(
+    var(--latte-rosewater-400),
+    var(--mocha-rosewater-400)
+  );
+  --catpuccin-rosewater-500: light-dark(
+    var(--latte-rosewater-500),
+    var(--mocha-rosewater-500)
+  );
+  --catpuccin-rosewater-600: light-dark(
+    var(--latte-rosewater-600),
+    var(--mocha-rosewater-600)
+  );
+  --catpuccin-rosewater-700: light-dark(
+    var(--latte-rosewater-700),
+    var(--mocha-rosewater-700)
+  );
+  --catpuccin-rosewater-800: light-dark(
+    var(--latte-rosewater-800),
+    var(--mocha-rosewater-800)
+  );
+  --catpuccin-rosewater-900: light-dark(
+    var(--latte-rosewater-900),
+    var(--mocha-rosewater-900)
+  );
+  --catpuccin-rosewater-950: light-dark(
+    var(--latte-rosewater-950),
+    var(--mocha-rosewater-950)
+  );
 
-  --catpuccin-flamingo-100: light-dark(var(--latte-flamingo-100), var(--mocha-flamingo-100));
-  --catpuccin-flamingo-200: light-dark(var(--latte-flamingo-200), var(--mocha-flamingo-200));
-  --catpuccin-flamingo-300: light-dark(var(--latte-flamingo-300), var(--mocha-flamingo-300));
-  --catpuccin-flamingo-400: light-dark(var(--latte-flamingo-400), var(--mocha-flamingo-400));
-  --catpuccin-flamingo-500: light-dark(var(--latte-flamingo-500), var(--mocha-flamingo-500));
-  --catpuccin-flamingo-600: light-dark(var(--latte-flamingo-600), var(--mocha-flamingo-600));
-  --catpuccin-flamingo-700: light-dark(var(--latte-flamingo-700), var(--mocha-flamingo-700));
-  --catpuccin-flamingo-800: light-dark(var(--latte-flamingo-800), var(--mocha-flamingo-800));
-  --catpuccin-flamingo-900: light-dark(var(--latte-flamingo-900), var(--mocha-flamingo-900));
-  --catpuccin-flamingo-950: light-dark(var(--latte-flamingo-950), var(--mocha-flamingo-950));
+  --catpuccin-flamingo-100: light-dark(
+    var(--latte-flamingo-100),
+    var(--mocha-flamingo-100)
+  );
+  --catpuccin-flamingo-200: light-dark(
+    var(--latte-flamingo-200),
+    var(--mocha-flamingo-200)
+  );
+  --catpuccin-flamingo-300: light-dark(
+    var(--latte-flamingo-300),
+    var(--mocha-flamingo-300)
+  );
+  --catpuccin-flamingo-400: light-dark(
+    var(--latte-flamingo-400),
+    var(--mocha-flamingo-400)
+  );
+  --catpuccin-flamingo-500: light-dark(
+    var(--latte-flamingo-500),
+    var(--mocha-flamingo-500)
+  );
+  --catpuccin-flamingo-600: light-dark(
+    var(--latte-flamingo-600),
+    var(--mocha-flamingo-600)
+  );
+  --catpuccin-flamingo-700: light-dark(
+    var(--latte-flamingo-700),
+    var(--mocha-flamingo-700)
+  );
+  --catpuccin-flamingo-800: light-dark(
+    var(--latte-flamingo-800),
+    var(--mocha-flamingo-800)
+  );
+  --catpuccin-flamingo-900: light-dark(
+    var(--latte-flamingo-900),
+    var(--mocha-flamingo-900)
+  );
+  --catpuccin-flamingo-950: light-dark(
+    var(--latte-flamingo-950),
+    var(--mocha-flamingo-950)
+  );
 
-  --catpuccin-pink-100: light-dark(var(--latte-pink-100), var(--mocha-pink-100));
-  --catpuccin-pink-200: light-dark(var(--latte-pink-200), var(--mocha-pink-200));
-  --catpuccin-pink-300: light-dark(var(--latte-pink-300), var(--mocha-pink-300));
-  --catpuccin-pink-400: light-dark(var(--latte-pink-400), var(--mocha-pink-400));
-  --catpuccin-pink-500: light-dark(var(--latte-pink-500), var(--mocha-pink-500));
-  --catpuccin-pink-600: light-dark(var(--latte-pink-600), var(--mocha-pink-600));
-  --catpuccin-pink-700: light-dark(var(--latte-pink-700), var(--mocha-pink-700));
-  --catpuccin-pink-800: light-dark(var(--latte-pink-800), var(--mocha-pink-800));
-  --catpuccin-pink-900: light-dark(var(--latte-pink-900), var(--mocha-pink-900));
-  --catpuccin-pink-950: light-dark(var(--latte-pink-950), var(--mocha-pink-950));
+  --catpuccin-pink-100: light-dark(
+    var(--latte-pink-100),
+    var(--mocha-pink-100)
+  );
+  --catpuccin-pink-200: light-dark(
+    var(--latte-pink-200),
+    var(--mocha-pink-200)
+  );
+  --catpuccin-pink-300: light-dark(
+    var(--latte-pink-300),
+    var(--mocha-pink-300)
+  );
+  --catpuccin-pink-400: light-dark(
+    var(--latte-pink-400),
+    var(--mocha-pink-400)
+  );
+  --catpuccin-pink-500: light-dark(
+    var(--latte-pink-500),
+    var(--mocha-pink-500)
+  );
+  --catpuccin-pink-600: light-dark(
+    var(--latte-pink-600),
+    var(--mocha-pink-600)
+  );
+  --catpuccin-pink-700: light-dark(
+    var(--latte-pink-700),
+    var(--mocha-pink-700)
+  );
+  --catpuccin-pink-800: light-dark(
+    var(--latte-pink-800),
+    var(--mocha-pink-800)
+  );
+  --catpuccin-pink-900: light-dark(
+    var(--latte-pink-900),
+    var(--mocha-pink-900)
+  );
+  --catpuccin-pink-950: light-dark(
+    var(--latte-pink-950),
+    var(--mocha-pink-950)
+  );
 
-  --catpuccin-mauve-100: light-dark(var(--latte-mauve-100), var(--mocha-mauve-100));
-  --catpuccin-mauve-200: light-dark(var(--latte-mauve-200), var(--mocha-mauve-200));
-  --catpuccin-mauve-300: light-dark(var(--latte-mauve-300), var(--mocha-mauve-300));
-  --catpuccin-mauve-400: light-dark(var(--latte-mauve-400), var(--mocha-mauve-400));
-  --catpuccin-mauve-500: light-dark(var(--latte-mauve-500), var(--mocha-mauve-500));
-  --catpuccin-mauve-600: light-dark(var(--latte-mauve-600), var(--mocha-mauve-600));
-  --catpuccin-mauve-700: light-dark(var(--latte-mauve-700), var(--mocha-mauve-700));
-  --catpuccin-mauve-800: light-dark(var(--latte-mauve-800), var(--mocha-mauve-800));
-  --catpuccin-mauve-900: light-dark(var(--latte-mauve-900), var(--mocha-mauve-900));
-  --catpuccin-mauve-950: light-dark(var(--latte-mauve-950), var(--mocha-mauve-950));
+  --catpuccin-mauve-100: light-dark(
+    var(--latte-mauve-100),
+    var(--mocha-mauve-100)
+  );
+  --catpuccin-mauve-200: light-dark(
+    var(--latte-mauve-200),
+    var(--mocha-mauve-200)
+  );
+  --catpuccin-mauve-300: light-dark(
+    var(--latte-mauve-300),
+    var(--mocha-mauve-300)
+  );
+  --catpuccin-mauve-400: light-dark(
+    var(--latte-mauve-400),
+    var(--mocha-mauve-400)
+  );
+  --catpuccin-mauve-500: light-dark(
+    var(--latte-mauve-500),
+    var(--mocha-mauve-500)
+  );
+  --catpuccin-mauve-600: light-dark(
+    var(--latte-mauve-600),
+    var(--mocha-mauve-600)
+  );
+  --catpuccin-mauve-700: light-dark(
+    var(--latte-mauve-700),
+    var(--mocha-mauve-700)
+  );
+  --catpuccin-mauve-800: light-dark(
+    var(--latte-mauve-800),
+    var(--mocha-mauve-800)
+  );
+  --catpuccin-mauve-900: light-dark(
+    var(--latte-mauve-900),
+    var(--mocha-mauve-900)
+  );
+  --catpuccin-mauve-950: light-dark(
+    var(--latte-mauve-950),
+    var(--mocha-mauve-950)
+  );
 
   --catpuccin-red-100: light-dark(var(--latte-red-100), var(--mocha-red-100));
   --catpuccin-red-200: light-dark(var(--latte-red-200), var(--mocha-red-200));
@@ -862,60 +1074,210 @@
   --catpuccin-red-900: light-dark(var(--latte-red-900), var(--mocha-red-900));
   --catpuccin-red-950: light-dark(var(--latte-red-950), var(--mocha-red-950));
 
-  --catpuccin-maroon-100: light-dark(var(--latte-maroon-100), var(--mocha-maroon-100));
-  --catpuccin-maroon-200: light-dark(var(--latte-maroon-200), var(--mocha-maroon-200));
-  --catpuccin-maroon-300: light-dark(var(--latte-maroon-300), var(--mocha-maroon-300));
-  --catpuccin-maroon-400: light-dark(var(--latte-maroon-400), var(--mocha-maroon-400));
-  --catpuccin-maroon-500: light-dark(var(--latte-maroon-500), var(--mocha-maroon-500));
-  --catpuccin-maroon-600: light-dark(var(--latte-maroon-600), var(--mocha-maroon-600));
-  --catpuccin-maroon-700: light-dark(var(--latte-maroon-700), var(--mocha-maroon-700));
-  --catpuccin-maroon-800: light-dark(var(--latte-maroon-800), var(--mocha-maroon-800));
-  --catpuccin-maroon-900: light-dark(var(--latte-maroon-900), var(--mocha-maroon-900));
-  --catpuccin-maroon-950: light-dark(var(--latte-maroon-950), var(--mocha-maroon-950));
+  --catpuccin-maroon-100: light-dark(
+    var(--latte-maroon-100),
+    var(--mocha-maroon-100)
+  );
+  --catpuccin-maroon-200: light-dark(
+    var(--latte-maroon-200),
+    var(--mocha-maroon-200)
+  );
+  --catpuccin-maroon-300: light-dark(
+    var(--latte-maroon-300),
+    var(--mocha-maroon-300)
+  );
+  --catpuccin-maroon-400: light-dark(
+    var(--latte-maroon-400),
+    var(--mocha-maroon-400)
+  );
+  --catpuccin-maroon-500: light-dark(
+    var(--latte-maroon-500),
+    var(--mocha-maroon-500)
+  );
+  --catpuccin-maroon-600: light-dark(
+    var(--latte-maroon-600),
+    var(--mocha-maroon-600)
+  );
+  --catpuccin-maroon-700: light-dark(
+    var(--latte-maroon-700),
+    var(--mocha-maroon-700)
+  );
+  --catpuccin-maroon-800: light-dark(
+    var(--latte-maroon-800),
+    var(--mocha-maroon-800)
+  );
+  --catpuccin-maroon-900: light-dark(
+    var(--latte-maroon-900),
+    var(--mocha-maroon-900)
+  );
+  --catpuccin-maroon-950: light-dark(
+    var(--latte-maroon-950),
+    var(--mocha-maroon-950)
+  );
 
-  --catpuccin-peach-100: light-dark(var(--latte-peach-100), var(--mocha-peach-100));
-  --catpuccin-peach-200: light-dark(var(--latte-peach-200), var(--mocha-peach-200));
-  --catpuccin-peach-300: light-dark(var(--latte-peach-300), var(--mocha-peach-300));
-  --catpuccin-peach-400: light-dark(var(--latte-peach-400), var(--mocha-peach-400));
-  --catpuccin-peach-500: light-dark(var(--latte-peach-500), var(--mocha-peach-500));
-  --catpuccin-peach-600: light-dark(var(--latte-peach-600), var(--mocha-peach-600));
-  --catpuccin-peach-700: light-dark(var(--latte-peach-700), var(--mocha-peach-700));
-  --catpuccin-peach-800: light-dark(var(--latte-peach-800), var(--mocha-peach-800));
-  --catpuccin-peach-900: light-dark(var(--latte-peach-900), var(--mocha-peach-900));
-  --catpuccin-peach-950: light-dark(var(--latte-peach-950), var(--mocha-peach-950));
+  --catpuccin-peach-100: light-dark(
+    var(--latte-peach-100),
+    var(--mocha-peach-100)
+  );
+  --catpuccin-peach-200: light-dark(
+    var(--latte-peach-200),
+    var(--mocha-peach-200)
+  );
+  --catpuccin-peach-300: light-dark(
+    var(--latte-peach-300),
+    var(--mocha-peach-300)
+  );
+  --catpuccin-peach-400: light-dark(
+    var(--latte-peach-400),
+    var(--mocha-peach-400)
+  );
+  --catpuccin-peach-500: light-dark(
+    var(--latte-peach-500),
+    var(--mocha-peach-500)
+  );
+  --catpuccin-peach-600: light-dark(
+    var(--latte-peach-600),
+    var(--mocha-peach-600)
+  );
+  --catpuccin-peach-700: light-dark(
+    var(--latte-peach-700),
+    var(--mocha-peach-700)
+  );
+  --catpuccin-peach-800: light-dark(
+    var(--latte-peach-800),
+    var(--mocha-peach-800)
+  );
+  --catpuccin-peach-900: light-dark(
+    var(--latte-peach-900),
+    var(--mocha-peach-900)
+  );
+  --catpuccin-peach-950: light-dark(
+    var(--latte-peach-950),
+    var(--mocha-peach-950)
+  );
 
-  --catpuccin-yellow-100: light-dark(var(--latte-yellow-100), var(--mocha-yellow-100));
-  --catpuccin-yellow-200: light-dark(var(--latte-yellow-200), var(--mocha-yellow-200));
-  --catpuccin-yellow-300: light-dark(var(--latte-yellow-300), var(--mocha-yellow-300));
-  --catpuccin-yellow-400: light-dark(var(--latte-yellow-400), var(--mocha-yellow-400));
-  --catpuccin-yellow-500: light-dark(var(--latte-yellow-500), var(--mocha-yellow-500));
-  --catpuccin-yellow-600: light-dark(var(--latte-yellow-600), var(--mocha-yellow-600));
-  --catpuccin-yellow-700: light-dark(var(--latte-yellow-700), var(--mocha-yellow-700));
-  --catpuccin-yellow-800: light-dark(var(--latte-yellow-800), var(--mocha-yellow-800));
-  --catpuccin-yellow-900: light-dark(var(--latte-yellow-900), var(--mocha-yellow-900));
-  --catpuccin-yellow-950: light-dark(var(--latte-yellow-950), var(--mocha-yellow-950));
+  --catpuccin-yellow-100: light-dark(
+    var(--latte-yellow-100),
+    var(--mocha-yellow-100)
+  );
+  --catpuccin-yellow-200: light-dark(
+    var(--latte-yellow-200),
+    var(--mocha-yellow-200)
+  );
+  --catpuccin-yellow-300: light-dark(
+    var(--latte-yellow-300),
+    var(--mocha-yellow-300)
+  );
+  --catpuccin-yellow-400: light-dark(
+    var(--latte-yellow-400),
+    var(--mocha-yellow-400)
+  );
+  --catpuccin-yellow-500: light-dark(
+    var(--latte-yellow-500),
+    var(--mocha-yellow-500)
+  );
+  --catpuccin-yellow-600: light-dark(
+    var(--latte-yellow-600),
+    var(--mocha-yellow-600)
+  );
+  --catpuccin-yellow-700: light-dark(
+    var(--latte-yellow-700),
+    var(--mocha-yellow-700)
+  );
+  --catpuccin-yellow-800: light-dark(
+    var(--latte-yellow-800),
+    var(--mocha-yellow-800)
+  );
+  --catpuccin-yellow-900: light-dark(
+    var(--latte-yellow-900),
+    var(--mocha-yellow-900)
+  );
+  --catpuccin-yellow-950: light-dark(
+    var(--latte-yellow-950),
+    var(--mocha-yellow-950)
+  );
 
-  --catpuccin-green-100: light-dark(var(--latte-green-100), var(--mocha-green-100));
-  --catpuccin-green-200: light-dark(var(--latte-green-200), var(--mocha-green-200));
-  --catpuccin-green-300: light-dark(var(--latte-green-300), var(--mocha-green-300));
-  --catpuccin-green-400: light-dark(var(--latte-green-400), var(--mocha-green-400));
-  --catpuccin-green-500: light-dark(var(--latte-green-500), var(--mocha-green-500));
-  --catpuccin-green-600: light-dark(var(--latte-green-600), var(--mocha-green-600));
-  --catpuccin-green-700: light-dark(var(--latte-green-700), var(--mocha-green-700));
-  --catpuccin-green-800: light-dark(var(--latte-green-800), var(--mocha-green-800));
-  --catpuccin-green-900: light-dark(var(--latte-green-900), var(--mocha-green-900));
-  --catpuccin-green-950: light-dark(var(--latte-green-950), var(--mocha-green-950));
+  --catpuccin-green-100: light-dark(
+    var(--latte-green-100),
+    var(--mocha-green-100)
+  );
+  --catpuccin-green-200: light-dark(
+    var(--latte-green-200),
+    var(--mocha-green-200)
+  );
+  --catpuccin-green-300: light-dark(
+    var(--latte-green-300),
+    var(--mocha-green-300)
+  );
+  --catpuccin-green-400: light-dark(
+    var(--latte-green-400),
+    var(--mocha-green-400)
+  );
+  --catpuccin-green-500: light-dark(
+    var(--latte-green-500),
+    var(--mocha-green-500)
+  );
+  --catpuccin-green-600: light-dark(
+    var(--latte-green-600),
+    var(--mocha-green-600)
+  );
+  --catpuccin-green-700: light-dark(
+    var(--latte-green-700),
+    var(--mocha-green-700)
+  );
+  --catpuccin-green-800: light-dark(
+    var(--latte-green-800),
+    var(--mocha-green-800)
+  );
+  --catpuccin-green-900: light-dark(
+    var(--latte-green-900),
+    var(--mocha-green-900)
+  );
+  --catpuccin-green-950: light-dark(
+    var(--latte-green-950),
+    var(--mocha-green-950)
+  );
 
-  --catpuccin-teal-100: light-dark(var(--latte-teal-100), var(--mocha-teal-100));
-  --catpuccin-teal-200: light-dark(var(--latte-teal-200), var(--mocha-teal-200));
-  --catpuccin-teal-300: light-dark(var(--latte-teal-300), var(--mocha-teal-300));
-  --catpuccin-teal-400: light-dark(var(--latte-teal-400), var(--mocha-teal-400));
-  --catpuccin-teal-500: light-dark(var(--latte-teal-500), var(--mocha-teal-500));
-  --catpuccin-teal-600: light-dark(var(--latte-teal-600), var(--mocha-teal-600));
-  --catpuccin-teal-700: light-dark(var(--latte-teal-700), var(--mocha-teal-700));
-  --catpuccin-teal-800: light-dark(var(--latte-teal-800), var(--mocha-teal-800));
-  --catpuccin-teal-900: light-dark(var(--latte-teal-900), var(--mocha-teal-900));
-  --catpuccin-teal-950: light-dark(var(--latte-teal-950), var(--mocha-teal-950));
+  --catpuccin-teal-100: light-dark(
+    var(--latte-teal-100),
+    var(--mocha-teal-100)
+  );
+  --catpuccin-teal-200: light-dark(
+    var(--latte-teal-200),
+    var(--mocha-teal-200)
+  );
+  --catpuccin-teal-300: light-dark(
+    var(--latte-teal-300),
+    var(--mocha-teal-300)
+  );
+  --catpuccin-teal-400: light-dark(
+    var(--latte-teal-400),
+    var(--mocha-teal-400)
+  );
+  --catpuccin-teal-500: light-dark(
+    var(--latte-teal-500),
+    var(--mocha-teal-500)
+  );
+  --catpuccin-teal-600: light-dark(
+    var(--latte-teal-600),
+    var(--mocha-teal-600)
+  );
+  --catpuccin-teal-700: light-dark(
+    var(--latte-teal-700),
+    var(--mocha-teal-700)
+  );
+  --catpuccin-teal-800: light-dark(
+    var(--latte-teal-800),
+    var(--mocha-teal-800)
+  );
+  --catpuccin-teal-900: light-dark(
+    var(--latte-teal-900),
+    var(--mocha-teal-900)
+  );
+  --catpuccin-teal-950: light-dark(
+    var(--latte-teal-950),
+    var(--mocha-teal-950)
+  );
 
   --catpuccin-sky-100: light-dark(var(--latte-sky-100), var(--mocha-sky-100));
   --catpuccin-sky-200: light-dark(var(--latte-sky-200), var(--mocha-sky-200));
@@ -928,38 +1290,128 @@
   --catpuccin-sky-900: light-dark(var(--latte-sky-900), var(--mocha-sky-900));
   --catpuccin-sky-950: light-dark(var(--latte-sky-950), var(--mocha-sky-950));
 
-  --catpuccin-sapphire-100: light-dark(var(--latte-sapphire-100), var(--mocha-sapphire-100));
-  --catpuccin-sapphire-200: light-dark(var(--latte-sapphire-200), var(--mocha-sapphire-200));
-  --catpuccin-sapphire-300: light-dark(var(--latte-sapphire-300), var(--mocha-sapphire-300));
-  --catpuccin-sapphire-400: light-dark(var(--latte-sapphire-400), var(--mocha-sapphire-400));
-  --catpuccin-sapphire-500: light-dark(var(--latte-sapphire-500), var(--mocha-sapphire-500));
-  --catpuccin-sapphire-600: light-dark(var(--latte-sapphire-600), var(--mocha-sapphire-600));
-  --catpuccin-sapphire-700: light-dark(var(--latte-sapphire-700), var(--mocha-sapphire-700));
-  --catpuccin-sapphire-800: light-dark(var(--latte-sapphire-800), var(--mocha-sapphire-800));
-  --catpuccin-sapphire-900: light-dark(var(--latte-sapphire-900), var(--mocha-sapphire-900));
-  --catpuccin-sapphire-950: light-dark(var(--latte-sapphire-950), var(--mocha-sapphire-950));
+  --catpuccin-sapphire-100: light-dark(
+    var(--latte-sapphire-100),
+    var(--mocha-sapphire-100)
+  );
+  --catpuccin-sapphire-200: light-dark(
+    var(--latte-sapphire-200),
+    var(--mocha-sapphire-200)
+  );
+  --catpuccin-sapphire-300: light-dark(
+    var(--latte-sapphire-300),
+    var(--mocha-sapphire-300)
+  );
+  --catpuccin-sapphire-400: light-dark(
+    var(--latte-sapphire-400),
+    var(--mocha-sapphire-400)
+  );
+  --catpuccin-sapphire-500: light-dark(
+    var(--latte-sapphire-500),
+    var(--mocha-sapphire-500)
+  );
+  --catpuccin-sapphire-600: light-dark(
+    var(--latte-sapphire-600),
+    var(--mocha-sapphire-600)
+  );
+  --catpuccin-sapphire-700: light-dark(
+    var(--latte-sapphire-700),
+    var(--mocha-sapphire-700)
+  );
+  --catpuccin-sapphire-800: light-dark(
+    var(--latte-sapphire-800),
+    var(--mocha-sapphire-800)
+  );
+  --catpuccin-sapphire-900: light-dark(
+    var(--latte-sapphire-900),
+    var(--mocha-sapphire-900)
+  );
+  --catpuccin-sapphire-950: light-dark(
+    var(--latte-sapphire-950),
+    var(--mocha-sapphire-950)
+  );
 
-  --catpuccin-blue-100: light-dark(var(--latte-blue-100), var(--mocha-blue-100));
-  --catpuccin-blue-200: light-dark(var(--latte-blue-200), var(--mocha-blue-200));
-  --catpuccin-blue-300: light-dark(var(--latte-blue-300), var(--mocha-blue-300));
-  --catpuccin-blue-400: light-dark(var(--latte-blue-400), var(--mocha-blue-400));
-  --catpuccin-blue-500: light-dark(var(--latte-blue-500), var(--mocha-blue-500));
-  --catpuccin-blue-600: light-dark(var(--latte-blue-600), var(--mocha-blue-600));
-  --catpuccin-blue-700: light-dark(var(--latte-blue-700), var(--mocha-blue-700));
-  --catpuccin-blue-800: light-dark(var(--latte-blue-800), var(--mocha-blue-800));
-  --catpuccin-blue-900: light-dark(var(--latte-blue-900), var(--mocha-blue-900));
-  --catpuccin-blue-950: light-dark(var(--latte-blue-950), var(--mocha-blue-950));
+  --catpuccin-blue-100: light-dark(
+    var(--latte-blue-100),
+    var(--mocha-blue-100)
+  );
+  --catpuccin-blue-200: light-dark(
+    var(--latte-blue-200),
+    var(--mocha-blue-200)
+  );
+  --catpuccin-blue-300: light-dark(
+    var(--latte-blue-300),
+    var(--mocha-blue-300)
+  );
+  --catpuccin-blue-400: light-dark(
+    var(--latte-blue-400),
+    var(--mocha-blue-400)
+  );
+  --catpuccin-blue-500: light-dark(
+    var(--latte-blue-500),
+    var(--mocha-blue-500)
+  );
+  --catpuccin-blue-600: light-dark(
+    var(--latte-blue-600),
+    var(--mocha-blue-600)
+  );
+  --catpuccin-blue-700: light-dark(
+    var(--latte-blue-700),
+    var(--mocha-blue-700)
+  );
+  --catpuccin-blue-800: light-dark(
+    var(--latte-blue-800),
+    var(--mocha-blue-800)
+  );
+  --catpuccin-blue-900: light-dark(
+    var(--latte-blue-900),
+    var(--mocha-blue-900)
+  );
+  --catpuccin-blue-950: light-dark(
+    var(--latte-blue-950),
+    var(--mocha-blue-950)
+  );
 
-  --catpuccin-lavender-100: light-dark(var(--latte-lavender-100), var(--mocha-lavender-100));
-  --catpuccin-lavender-200: light-dark(var(--latte-lavender-200), var(--mocha-lavender-200));
-  --catpuccin-lavender-300: light-dark(var(--latte-lavender-300), var(--mocha-lavender-300));
-  --catpuccin-lavender-400: light-dark(var(--latte-lavender-400), var(--mocha-lavender-400));
-  --catpuccin-lavender-500: light-dark(var(--latte-lavender-500), var(--mocha-lavender-500));
-  --catpuccin-lavender-600: light-dark(var(--latte-lavender-600), var(--mocha-lavender-600));
-  --catpuccin-lavender-700: light-dark(var(--latte-lavender-700), var(--mocha-lavender-700));
-  --catpuccin-lavender-800: light-dark(var(--latte-lavender-800), var(--mocha-lavender-800));
-  --catpuccin-lavender-900: light-dark(var(--latte-lavender-900), var(--mocha-lavender-900));
-  --catpuccin-lavender-950: light-dark(var(--latte-lavender-950), var(--mocha-lavender-950));
+  --catpuccin-lavender-100: light-dark(
+    var(--latte-lavender-100),
+    var(--mocha-lavender-100)
+  );
+  --catpuccin-lavender-200: light-dark(
+    var(--latte-lavender-200),
+    var(--mocha-lavender-200)
+  );
+  --catpuccin-lavender-300: light-dark(
+    var(--latte-lavender-300),
+    var(--mocha-lavender-300)
+  );
+  --catpuccin-lavender-400: light-dark(
+    var(--latte-lavender-400),
+    var(--mocha-lavender-400)
+  );
+  --catpuccin-lavender-500: light-dark(
+    var(--latte-lavender-500),
+    var(--mocha-lavender-500)
+  );
+  --catpuccin-lavender-600: light-dark(
+    var(--latte-lavender-600),
+    var(--mocha-lavender-600)
+  );
+  --catpuccin-lavender-700: light-dark(
+    var(--latte-lavender-700),
+    var(--mocha-lavender-700)
+  );
+  --catpuccin-lavender-800: light-dark(
+    var(--latte-lavender-800),
+    var(--mocha-lavender-800)
+  );
+  --catpuccin-lavender-900: light-dark(
+    var(--latte-lavender-900),
+    var(--mocha-lavender-900)
+  );
+  --catpuccin-lavender-950: light-dark(
+    var(--latte-lavender-950),
+    var(--mocha-lavender-950)
+  );
 
   --container-3xs: 16rem;
   --container-2xs: 18rem;

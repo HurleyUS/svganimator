@@ -26,7 +26,9 @@ export function Providers({ children }: Readonly<{ children: ReactNode }>) {
 
   return (
     <Suspense fallback={children}>
-      <LazyClerkProvider publishableKey={publishableKey}>{children}</LazyClerkProvider>
+      <LazyClerkProvider publishableKey={publishableKey}>
+        {children}
+      </LazyClerkProvider>
     </Suspense>
   );
 }

@@ -5,7 +5,9 @@ const [command, ...args] = process.argv.slice(2);
 const allowedCommands = new Set(["create", "merge"]);
 
 if (!(command && allowedCommands.has(command))) {
-  process.stderr.write("Usage: bun scripts/pr.mts <create|merge> [...gh args]\n");
+  process.stderr.write(
+    "Usage: bun scripts/pr.mts <create|merge> [...gh args]\n",
+  );
   process.exit(1);
 }
 
