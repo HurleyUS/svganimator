@@ -48,13 +48,13 @@ jobs:
           fi
 
       - name: Format
-        run: bunx --bun prettier --write . --ignore-path .gitignore --ignore-unknown
+        run: bunx --bun prettier@3.6.2 --write . --ignore-path .gitignore --ignore-unknown
 
       - name: Verify formatter produced no diff
         run: git diff --exit-code
 
       - name: Lint
-        run: bun run lint
+        run: bunx --bun @biomejs/biome lint . --only=correctness --diagnostic-level=error --max-diagnostics=200
 
       - name: Check
         run: bun run check

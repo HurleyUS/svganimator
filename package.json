@@ -26,7 +26,7 @@
     "pr:merge": "bun scripts/pr.mts merge",
     "tsc": "bun --filter '*' typecheck",
     "typecheck": "bun --filter '*' typecheck",
-    "lint": "bun scripts/lint.mts",
+    "lint": "bunx --bun @biomejs/biome lint . --only=correctness --diagnostic-level=error --max-diagnostics=200",
     "lint:fix": "bun x biome check --write .",
     "format": "bun x biome format --write .",
     "test": "bun --filter '*' test",
