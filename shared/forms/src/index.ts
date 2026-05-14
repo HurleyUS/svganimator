@@ -1,3 +1,6 @@
+/**
+ * Shared Forms Src Index public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

@@ -1,3 +1,6 @@
+/**
+ * Shared Svg Src Index public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { z } from "zod";
 

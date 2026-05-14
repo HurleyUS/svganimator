@@ -1,3 +1,6 @@
+/**
+ * Web Src Routes Root public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 /// <reference types="vite/client" />
 

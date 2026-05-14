@@ -1,3 +1,6 @@
+/**
+ * Web Src Components Providers public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { lazy, type ReactNode, Suspense } from "react";
 import { convex } from "../lib/convex";

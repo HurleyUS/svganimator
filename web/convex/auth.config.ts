@@ -1,3 +1,6 @@
+/**
+ * Web Convex Auth.config public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 /** Clerk auth provider configuration for Convex. */
 export default {

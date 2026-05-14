@@ -1,3 +1,6 @@
+/**
+ * Web Src Lib Export Renderer public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 
 import { execFile } from "node:child_process";

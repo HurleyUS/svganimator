@@ -1,3 +1,6 @@
+/**
+ * Web Src Lib Stripe public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { createServerFn } from "@tanstack/react-start";
 import Stripe from "stripe";

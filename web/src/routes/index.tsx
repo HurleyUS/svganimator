@@ -1,3 +1,6 @@
+/**
+ * Web Src Routes Index public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 
 import { appConfig } from "@canaveral/config";

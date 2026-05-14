@@ -1,3 +1,6 @@
+/**
+ * Web Src Lib Convex public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { ConvexReactClient } from "convex/react";
 

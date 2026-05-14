@@ -1,3 +1,6 @@
+/**
+ * Web Vite.config public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";

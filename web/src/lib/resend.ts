@@ -1,3 +1,6 @@
+/**
+ * Web Src Lib Resend public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { createServerFn } from "@tanstack/react-start";
 import { Resend } from "resend";

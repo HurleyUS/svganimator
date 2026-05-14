@@ -1,3 +1,6 @@
+/**
+ * Shared Ui Src Index public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { cx } from "@canaveral/utils";
 import type { ButtonHTMLAttributes, ReactNode } from "react";

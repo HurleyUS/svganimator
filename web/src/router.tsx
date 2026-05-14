@@ -1,3 +1,6 @@
+/**
+ * Web Src Router public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 import { createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";

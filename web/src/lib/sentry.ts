@@ -1,3 +1,6 @@
+/**
+ * Web Src Lib Sentry public module surface.
+ */
 // fallow-ignore-file coverage-gaps
 /** Lazily initializes Sentry when a browser DSN is configured. */
 export function initSentry() {

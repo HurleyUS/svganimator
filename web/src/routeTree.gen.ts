@@ -1,3 +1,6 @@
+/**
+ * Web Src RouteTree.gen public module surface.
+ */
 /* eslint-disable */
 
 // @ts-nocheck
