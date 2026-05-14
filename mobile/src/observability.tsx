@@ -7,7 +7,8 @@ import { PostHogProvider } from "posthog-react-native";
 
 const SENTRY_DSN = process.env.EXPO_PUBLIC_SENTRY_DSN;
 const POSTHOG_KEY = process.env.EXPO_PUBLIC_POSTHOG_KEY;
-const POSTHOG_HOST = process.env.EXPO_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
+const POSTHOG_HOST =
+  process.env.EXPO_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
 
 let sentryInitialized = false;
 
@@ -26,7 +27,11 @@ export function initMobileObservability() {
 }
 
 /** Provide PostHog only when the deployment has a public project key. */
-export function MobileObservabilityProvider({ children }: { children: React.ReactNode }) {
+export function MobileObservabilityProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   if (!POSTHOG_KEY) {
     return <>{children}</>;
   }
