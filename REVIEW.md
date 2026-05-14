@@ -4,190 +4,188 @@
 
 PASS: static Sentry/PostHog coverage checks (react-native)
 
-
 ## HEALTH
 
 {
-  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
-  "version": "2.1.0",
-  "runs": [
-    {
-      "tool": {
-        "driver": {
-          "name": "fallow",
-          "version": "2.74.0",
-          "informationUri": "https://github.com/fallow-rs/fallow",
-          "rules": [
-            {
-              "id": "fallow/high-cyclomatic-complexity",
-              "shortDescription": {
-                "text": "Function has high cyclomatic complexity"
-              },
-              "fullDescription": {
-                "text": "McCabe cyclomatic complexity exceeds the configured threshold. Cyclomatic complexity counts the number of independent paths through a function (1 + decision points: if/else, switch cases, loops, ternary, logical operators). High values indicate functions that are hard to test exhaustively."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#cyclomatic-complexity",
-              "defaultConfiguration": {
-                "level": "note"
-              }
-            },
-            {
-              "id": "fallow/high-cognitive-complexity",
-              "shortDescription": {
-                "text": "Function has high cognitive complexity"
-              },
-              "fullDescription": {
-                "text": "SonarSource cognitive complexity exceeds the configured threshold. Unlike cyclomatic complexity, cognitive complexity penalizes nesting depth and non-linear control flow (breaks, continues, early returns). It measures how hard a function is to understand when reading sequentially."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#cognitive-complexity",
-              "defaultConfiguration": {
-                "level": "note"
-              }
-            },
-            {
-              "id": "fallow/high-complexity",
-              "shortDescription": {
-                "text": "Function exceeds both complexity thresholds"
-              },
-              "fullDescription": {
-                "text": "Function exceeds both cyclomatic and cognitive complexity thresholds. This is the strongest signal that a function needs refactoring, it has many paths AND is hard to understand."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#complexity-metrics",
-              "defaultConfiguration": {
-                "level": "note"
-              }
-            },
-            {
-              "id": "fallow/high-crap-score",
-              "shortDescription": {
-                "text": "Function has a high CRAP score (complexity combined with low coverage)"
-              },
-              "fullDescription": {
-                "text": "The function's CRAP (Change Risk Anti-Patterns) score meets or exceeds the configured threshold. CRAP combines cyclomatic complexity with test coverage using the Savoia and Evans (2007) formula: `CC^2 * (1 - coverage/100)^3 + CC`. High CRAP indicates changes to this function carry high risk because it is complex AND poorly tested. Pair with `--coverage` for accurate per-function scoring; without it fallow estimates coverage from the module graph."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#crap-score",
-              "defaultConfiguration": {
-                "level": "warning"
-              }
-            },
-            {
-              "id": "fallow/refactoring-target",
-              "shortDescription": {
-                "text": "File identified as a high-priority refactoring candidate"
-              },
-              "fullDescription": {
-                "text": "File identified as a refactoring candidate based on a weighted combination of complexity density, churn velocity, dead code ratio, fan-in (blast radius), and fan-out (coupling). Categories: urgent churn+complexity, break circular dependency, split high-impact file, remove dead code, extract complex functions, reduce coupling."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#refactoring-targets",
-              "defaultConfiguration": {
-                "level": "warning"
-              }
-            },
-            {
-              "id": "fallow/untested-file",
-              "shortDescription": {
-                "text": "Runtime-reachable file has no test dependency path"
-              },
-              "fullDescription": {
-                "text": "A file is reachable from runtime entry points but not from any discovered test entry point. This indicates production code that no test imports, directly or transitively, according to the static module graph."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#coverage-gaps",
-              "defaultConfiguration": {
-                "level": "warning"
-              }
-            },
-            {
-              "id": "fallow/untested-export",
-              "shortDescription": {
-                "text": "Runtime-reachable export has no test dependency path"
-              },
-              "fullDescription": {
-                "text": "A value export is reachable from runtime entry points but no test-reachable module references it. This is a static test dependency gap rather than line coverage, and highlights exports exercised only through production entry paths."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#coverage-gaps",
-              "defaultConfiguration": {
-                "level": "warning"
-              }
-            },
-            {
-              "id": "fallow/runtime-safe-to-delete",
-              "shortDescription": {
-                "text": "Statically unused AND never invoked in production with V8 tracking"
-              },
-              "fullDescription": {
-                "text": "The function is both statically unreachable in the module graph and was never invoked during the observed runtime coverage window. This is the highest-confidence delete signal fallow emits."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
-              "defaultConfiguration": {
-                "level": "warning"
-              }
-            },
-            {
-              "id": "fallow/runtime-review-required",
-              "shortDescription": {
-                "text": "Statically used but never invoked in production"
-              },
-              "fullDescription": {
-                "text": "The function is reachable in the module graph (or exercised by tests / untracked call sites) but was not invoked during the observed runtime coverage window. Needs a human look: may be seasonal, error-path only, or legitimately unused."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
-              "defaultConfiguration": {
-                "level": "warning"
-              }
-            },
-            {
-              "id": "fallow/runtime-low-traffic",
-              "shortDescription": {
-                "text": "Function was invoked below the low-traffic threshold"
-              },
-              "fullDescription": {
-                "text": "The function was invoked in production but below the configured `--low-traffic-threshold` fraction of total trace count (spec default 0.1%). Effectively dead for the current period."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
-              "defaultConfiguration": {
-                "level": "note"
-              }
-            },
-            {
-              "id": "fallow/runtime-coverage-unavailable",
-              "shortDescription": {
-                "text": "Runtime coverage could not be resolved for this function"
-              },
-              "fullDescription": {
-                "text": "The function could not be matched to a V8-tracked coverage entry. Common causes: the function lives in a worker thread (separate V8 isolate), it is lazy-parsed and never reached the JIT tier, or its source map did not resolve to the expected source path. This is advisory, not a dead-code signal."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
-              "defaultConfiguration": {
-                "level": "note"
-              }
-            },
-            {
-              "id": "fallow/runtime-coverage",
-              "shortDescription": {
-                "text": "Runtime coverage finding"
-              },
-              "fullDescription": {
-                "text": "Generic runtime-coverage finding for verdicts not covered by a more specific rule. Covers the forward-compat `unknown` sentinel; the CLI filters `active` entries out of `runtime_coverage.findings` so the surfaced list stays actionable."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
-              "defaultConfiguration": {
-                "level": "note"
-              }
-            }
-          ]
-        }
-      },
-      "results": []
-    }
-  ]
+"$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+"version": "2.1.0",
+"runs": [
+{
+"tool": {
+"driver": {
+"name": "fallow",
+"version": "2.74.0",
+"informationUri": "https://github.com/fallow-rs/fallow",
+"rules": [
+{
+"id": "fallow/high-cyclomatic-complexity",
+"shortDescription": {
+"text": "Function has high cyclomatic complexity"
+},
+"fullDescription": {
+"text": "McCabe cyclomatic complexity exceeds the configured threshold. Cyclomatic complexity counts the number of independent paths through a function (1 + decision points: if/else, switch cases, loops, ternary, logical operators). High values indicate functions that are hard to test exhaustively."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#cyclomatic-complexity",
+"defaultConfiguration": {
+"level": "note"
 }
-
+},
+{
+"id": "fallow/high-cognitive-complexity",
+"shortDescription": {
+"text": "Function has high cognitive complexity"
+},
+"fullDescription": {
+"text": "SonarSource cognitive complexity exceeds the configured threshold. Unlike cyclomatic complexity, cognitive complexity penalizes nesting depth and non-linear control flow (breaks, continues, early returns). It measures how hard a function is to understand when reading sequentially."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#cognitive-complexity",
+"defaultConfiguration": {
+"level": "note"
+}
+},
+{
+"id": "fallow/high-complexity",
+"shortDescription": {
+"text": "Function exceeds both complexity thresholds"
+},
+"fullDescription": {
+"text": "Function exceeds both cyclomatic and cognitive complexity thresholds. This is the strongest signal that a function needs refactoring, it has many paths AND is hard to understand."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#complexity-metrics",
+"defaultConfiguration": {
+"level": "note"
+}
+},
+{
+"id": "fallow/high-crap-score",
+"shortDescription": {
+"text": "Function has a high CRAP score (complexity combined with low coverage)"
+},
+"fullDescription": {
+"text": "The function's CRAP (Change Risk Anti-Patterns) score meets or exceeds the configured threshold. CRAP combines cyclomatic complexity with test coverage using the Savoia and Evans (2007) formula: `CC^2 * (1 - coverage/100)^3 + CC`. High CRAP indicates changes to this function carry high risk because it is complex AND poorly tested. Pair with `--coverage` for accurate per-function scoring; without it fallow estimates coverage from the module graph."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#crap-score",
+"defaultConfiguration": {
+"level": "warning"
+}
+},
+{
+"id": "fallow/refactoring-target",
+"shortDescription": {
+"text": "File identified as a high-priority refactoring candidate"
+},
+"fullDescription": {
+"text": "File identified as a refactoring candidate based on a weighted combination of complexity density, churn velocity, dead code ratio, fan-in (blast radius), and fan-out (coupling). Categories: urgent churn+complexity, break circular dependency, split high-impact file, remove dead code, extract complex functions, reduce coupling."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#refactoring-targets",
+"defaultConfiguration": {
+"level": "warning"
+}
+},
+{
+"id": "fallow/untested-file",
+"shortDescription": {
+"text": "Runtime-reachable file has no test dependency path"
+},
+"fullDescription": {
+"text": "A file is reachable from runtime entry points but not from any discovered test entry point. This indicates production code that no test imports, directly or transitively, according to the static module graph."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#coverage-gaps",
+"defaultConfiguration": {
+"level": "warning"
+}
+},
+{
+"id": "fallow/untested-export",
+"shortDescription": {
+"text": "Runtime-reachable export has no test dependency path"
+},
+"fullDescription": {
+"text": "A value export is reachable from runtime entry points but no test-reachable module references it. This is a static test dependency gap rather than line coverage, and highlights exports exercised only through production entry paths."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#coverage-gaps",
+"defaultConfiguration": {
+"level": "warning"
+}
+},
+{
+"id": "fallow/runtime-safe-to-delete",
+"shortDescription": {
+"text": "Statically unused AND never invoked in production with V8 tracking"
+},
+"fullDescription": {
+"text": "The function is both statically unreachable in the module graph and was never invoked during the observed runtime coverage window. This is the highest-confidence delete signal fallow emits."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
+"defaultConfiguration": {
+"level": "warning"
+}
+},
+{
+"id": "fallow/runtime-review-required",
+"shortDescription": {
+"text": "Statically used but never invoked in production"
+},
+"fullDescription": {
+"text": "The function is reachable in the module graph (or exercised by tests / untracked call sites) but was not invoked during the observed runtime coverage window. Needs a human look: may be seasonal, error-path only, or legitimately unused."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
+"defaultConfiguration": {
+"level": "warning"
+}
+},
+{
+"id": "fallow/runtime-low-traffic",
+"shortDescription": {
+"text": "Function was invoked below the low-traffic threshold"
+},
+"fullDescription": {
+"text": "The function was invoked in production but below the configured `--low-traffic-threshold` fraction of total trace count (spec default 0.1%). Effectively dead for the current period."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
+"defaultConfiguration": {
+"level": "note"
+}
+},
+{
+"id": "fallow/runtime-coverage-unavailable",
+"shortDescription": {
+"text": "Runtime coverage could not be resolved for this function"
+},
+"fullDescription": {
+"text": "The function could not be matched to a V8-tracked coverage entry. Common causes: the function lives in a worker thread (separate V8 isolate), it is lazy-parsed and never reached the JIT tier, or its source map did not resolve to the expected source path. This is advisory, not a dead-code signal."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
+"defaultConfiguration": {
+"level": "note"
+}
+},
+{
+"id": "fallow/runtime-coverage",
+"shortDescription": {
+"text": "Runtime coverage finding"
+},
+"fullDescription": {
+"text": "Generic runtime-coverage finding for verdicts not covered by a more specific rule. Covers the forward-compat `unknown` sentinel; the CLI filters `active` entries out of `runtime_coverage.findings` so the surfaced list stays actionable."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
+"defaultConfiguration": {
+"level": "note"
+}
+}
+]
+}
+},
+"results": []
+}
+]
+}
 
 ## AUDIT
 
-[2m   0.325688333s[0m [33m WARN[0m Broken tsconfig chain: Tsconfig not found expo/tsconfig.base. Falling back to resolver-less resolution for affected files. Relative and bare imports still work, but tsconfig path aliases from missing inherited configs will not. Fix the extends/references chain to restore full alias support.
+[2m 0.325688333s[0m [33m WARN[0m Broken tsconfig chain: Tsconfig not found expo/tsconfig.base. Falling back to resolver-less resolution for affected files. Relative and bare imports still work, but tsconfig path aliases from missing inherited configs will not. Fix the extends/references chain to restore full alias support.
 {
-  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+"$schema": "https://json.schemastore.org/sarif-2.1.0.json",
   "version": "2.1.0",
   "runs": [
     {
@@ -476,7 +474,7 @@ PASS: static Sentry/PostHog coverage checks (react-native)
                 "text": "pnpm.overrides entry has an unparsable key or value"
               },
               "fullDescription": {
-                "text": "An entry in `pnpm-workspace.yaml`'s `overrides:` or `package.json`'s `pnpm.overrides` whose key or value does not parse as a valid pnpm override spec. Common shapes: empty key, empty value, malformed version selector on the target (`@types/react@<<18`), unbalanced parent matcher (`react>`), or unsupported `npm:alias@` syntax in the version (only the `-`, `$ref`, and `npm:alias` pnpm idioms are allowed). pnpm rejects the workspace at install time with a parser error. To fix: correct the key/value shape, or remove the entry. See also: fallow/unused-dependency-override."
+                "text": "An entry in `pnpm-workspace.yaml`'s `overrides:` or `package.json`'s `pnpm.overrides` whose key or value does not parse as a valid pnpm override spec. Common shapes: empty key, empty value, malformed version selector on the target (`@types/react@<<18`), unbalanced parent matcher (`react>`), or unsupported `npm:alias@` syntax in the version (only the `-`, `$ref`, and `npm:alias`pnpm idioms are allowed). pnpm rejects the workspace at install time with a parser error. To fix: correct the key/value shape, or remove the entry. See also: fallow/unused-dependency-override."
               },
               "helpUri": "https://docs.fallow.tools/explanations/dead-code#misconfigured-dependency-overrides",
               "defaultConfiguration": {
@@ -540,7 +538,7 @@ PASS: static Sentry/PostHog coverage checks (react-native)
                 "text": "Function has a high CRAP score (complexity combined with low coverage)"
               },
               "fullDescription": {
-                "text": "The function's CRAP (Change Risk Anti-Patterns) score meets or exceeds the configured threshold. CRAP combines cyclomatic complexity with test coverage using the Savoia and Evans (2007) formula: `CC^2 * (1 - coverage/100)^3 + CC`. High CRAP indicates changes to this function carry high risk because it is complex AND poorly tested. Pair with `--coverage` for accurate per-function scoring; without it fallow estimates coverage from the module graph."
+                "text": "The function's CRAP (Change Risk Anti-Patterns) score meets or exceeds the configured threshold. CRAP combines cyclomatic complexity with test coverage using the Savoia and Evans (2007) formula:`CC^2 \* (1 - coverage/100)^3 + CC`. High CRAP indicates changes to this function carry high risk because it is complex AND poorly tested. Pair with `--coverage`for accurate per-function scoring; without it fallow estimates coverage from the module graph."
               },
               "helpUri": "https://docs.fallow.tools/explanations/health#crap-score",
               "defaultConfiguration": {
@@ -618,7 +616,7 @@ PASS: static Sentry/PostHog coverage checks (react-native)
                 "text": "Function was invoked below the low-traffic threshold"
               },
               "fullDescription": {
-                "text": "The function was invoked in production but below the configured `--low-traffic-threshold` fraction of total trace count (spec default 0.1%). Effectively dead for the current period."
+                "text": "The function was invoked in production but below the configured`--low-traffic-threshold`fraction of total trace count (spec default 0.1%). Effectively dead for the current period."
               },
               "helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
               "defaultConfiguration": {
@@ -644,26 +642,25 @@ PASS: static Sentry/PostHog coverage checks (react-native)
                 "text": "Runtime coverage finding"
               },
               "fullDescription": {
-                "text": "Generic runtime-coverage finding for verdicts not covered by a more specific rule. Covers the forward-compat `unknown` sentinel; the CLI filters `active` entries out of `runtime_coverage.findings` so the surfaced list stays actionable."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
-              "defaultConfiguration": {
-                "level": "note"
-              }
-            }
-          ]
-        }
-      },
-      "results": []
-    }
-  ]
+                "text": "Generic runtime-coverage finding for verdicts not covered by a more specific rule. Covers the forward-compat`unknown`sentinel; the CLI filters`active`entries out of`runtime_coverage.findings` so the surfaced list stays actionable."
+},
+"helpUri": "https://docs.fallow.tools/explanations/health#runtime-coverage",
+"defaultConfiguration": {
+"level": "note"
 }
-
+}
+]
+}
+},
+"results": []
+}
+]
+}
 
 ## DEAD
 
 {
-  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+"$schema": "https://json.schemastore.org/sarif-2.1.0.json",
   "version": "2.1.0",
   "runs": [
     {
@@ -953,57 +950,54 @@ PASS: static Sentry/PostHog coverage checks (react-native)
               },
               "fullDescription": {
                 "text": "An entry in `pnpm-workspace.yaml`'s `overrides:` or `package.json`'s `pnpm.overrides` whose key or value does not parse as a valid pnpm override spec. Common shapes: empty key, empty value, malformed version selector on the target (`@types/react@<<18`), unbalanced parent matcher (`react>`), or unsupported `npm:alias@` syntax in the version (only the `-`, `$ref`, and `npm:alias` pnpm idioms are allowed). pnpm rejects the workspace at install time with a parser error. To fix: correct the key/value shape, or remove the entry. See also: fallow/unused-dependency-override."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/dead-code#misconfigured-dependency-overrides",
-              "defaultConfiguration": {
-                "level": "error"
-              }
-            }
-          ]
-        }
-      },
-      "results": []
-    }
-  ]
+},
+"helpUri": "https://docs.fallow.tools/explanations/dead-code#misconfigured-dependency-overrides",
+"defaultConfiguration": {
+"level": "error"
 }
-
+}
+]
+}
+},
+"results": []
+}
+]
+}
 
 ## DUPLICATION
 
 {
-  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
-  "version": "2.1.0",
-  "runs": [
-    {
-      "tool": {
-        "driver": {
-          "name": "fallow",
-          "version": "2.74.0",
-          "informationUri": "https://github.com/fallow-rs/fallow",
-          "rules": [
-            {
-              "id": "fallow/code-duplication",
-              "shortDescription": {
-                "text": "Duplicated code block"
-              },
-              "fullDescription": {
-                "text": "A block of code that appears in multiple locations with identical or near-identical token sequences. Clone detection uses normalized token comparison: identifier names and literals are abstracted away in non-strict modes."
-              },
-              "helpUri": "https://docs.fallow.tools/explanations/duplication#clone-groups",
-              "defaultConfiguration": {
-                "level": "warning"
-              }
-            }
-          ]
-        }
-      },
-      "results": []
-    }
-  ]
+"$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+"version": "2.1.0",
+"runs": [
+{
+"tool": {
+"driver": {
+"name": "fallow",
+"version": "2.74.0",
+"informationUri": "https://github.com/fallow-rs/fallow",
+"rules": [
+{
+"id": "fallow/code-duplication",
+"shortDescription": {
+"text": "Duplicated code block"
+},
+"fullDescription": {
+"text": "A block of code that appears in multiple locations with identical or near-identical token sequences. Clone detection uses normalized token comparison: identifier names and literals are abstracted away in non-strict modes."
+},
+"helpUri": "https://docs.fallow.tools/explanations/duplication#clone-groups",
+"defaultConfiguration": {
+"level": "warning"
 }
-
+}
+]
+}
+},
+"results": []
+}
+]
+}
 
 ## DOCSTRINGS
 
 {"version":"2.1.0","$schema":"https://json.schemastore.org/sarif-2.1.0.json","runs":[{"tool":{"driver":{"name":"scribe","rules":[{"id":"missing-docstring","shortDescription":{"text":"Missing public symbol documentation"}}]}},"results":[]}]}
-
