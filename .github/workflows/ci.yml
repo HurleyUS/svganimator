@@ -40,7 +40,7 @@ jobs:
           if [ -f bun.lock ]; then
             bun install --frozen-lockfile || bun install --no-save
           elif [ -f package-lock.json ]; then
-            npm ci
+            npm ci --legacy-peer-deps
           elif [ -f bun.lockb ]; then
             bun install --frozen-lockfile || bun install --no-save
           else
@@ -54,7 +54,7 @@ jobs:
         run: git diff --exit-code
 
       - name: Lint
-        run: bunx --bun @biomejs/biome lint . --only=correctness --diagnostic-level=error --max-diagnostics=200
+        run: bunx --bun oxlint . --quiet
 
       - name: Check
         run: bun run check
