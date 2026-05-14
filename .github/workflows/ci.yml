@@ -55,5 +55,12 @@ jobs:
       - name: Check
         run: bun run check
 
+      - name: Install FReview shell dependency
+        run: |
+          if ! command -v zsh >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y zsh
+          fi
+
       - name: FReview
         run: bunx --bun github:HurleyUS/freview --ci
